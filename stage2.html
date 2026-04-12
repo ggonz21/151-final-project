@@ -93,8 +93,8 @@ function draw() {
 
   // ---------- MAPPING ACCEL → ROTATION ----------
   // Accel range ~[-10,10] → rotation ~[-PI/2, PI/2]
-  let rotX = map(smoothY, -10, 10, -HALF_PI, HALF_PI);
-  let rotY = map(smoothX, -10, 10, -HALF_PI, HALF_PI);
+  let rotX = map(smoothY, -10, 30, -HALF_PI, HALF_PI);
+  let rotY = map(smoothX, -10, 50, -HALF_PI, HALF_PI);
 
   rotateX(rotX);
   rotateY(rotY);
