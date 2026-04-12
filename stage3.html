@@ -83,8 +83,8 @@ function draw() {
   // ---------- SIMPLE PHYSICS ----------
   // Tilt → force → velocity → position
   // 0.5 controls sensitivity, 0.98 is friction/damping
-  velX += accelX * 0.5;
-  velY += -accelY * 0.5; // negative: screen Y is flipped
+  velX += accelX * 1.5;
+  velY += -accelY * 2; // negative: screen Y is flipped
   velX *= 0.98;
   velY *= 0.98;
   posX += velX;
@@ -101,8 +101,8 @@ function draw() {
   // push/pop isolates this transform from others
   push();
     translate(posX, posY, 0);
-    rotateX(posY * 0.02);
-    rotateY(posX * 0.02);
+    rotateX(posY * 0.05);
+    rotateY(posX * 0.05);
     normalMaterial();
     sphere(60);
   pop();
@@ -110,8 +110,8 @@ function draw() {
   // ---------- SHAPE 2: STATIONARY TORUS ----------
   // Stays at center, rotates with tilt (Stage 2 technique)
   push();
-    rotateX(map(accelY, -10, 10, -HALF_PI, HALF_PI));
-    rotateY(map(accelX, -10, 10, -HALF_PI, HALF_PI));
+    rotateX(map(accelY, -10, 30, -HALF_PI, HALF_PI));
+    rotateY(map(accelX, -10, 50, -HALF_PI, HALF_PI));
     ambientMaterial(100, 200, 255);
     torus(120, 20);
   pop();
