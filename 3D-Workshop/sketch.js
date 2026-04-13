@@ -12,6 +12,7 @@ function draw() {
   orbitControl();
 
   push();
+    fill(40, 50, 70);
     rotateX(rotX);
     rotateY(rotY);
     rotateZ(rotZ);
