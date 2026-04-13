@@ -1,68 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ART 151 — Motion + Geo Workshop</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: monospace;
-      background: #111;
-      color: #eee;
-      padding: 30px 20px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    h1 { font-size: 22px; margin-bottom: 6px; }
-    .sub { color: #888; font-size: 14px; margin-bottom: 30px; }
-    a {
-      display: block;
-      padding: 18px 16px;
-      margin-bottom: 12px;
-      background: #1a1a2e;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #7ec8e3;
-      text-decoration: none;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-    a:active { background: #222244; }
-    a span { display: block; color: #888; font-size: 13px; margin-top: 4px; }
-  </style>
-</head>
-<body>
-  <h1>ART 151 Final Workshop!</h1>
-  <a href="3D-Workshop/index.html">
-    My 3D Workshop
-  </a>
-  <br>
-  <br>
-  <p class="sub">Accelerometer + Geolocation + 3D</p>
-  <a href="stage1.html">
-    Stage 1: Basic 3D
-    <span>WEBGL, lighting, rotation, normalMaterial</span>
-  </a>
-  <a href="stage2.html">
-    Stage 2: Accelerometer → Rotation
-    <span>DeviceMotionEvent, iOS permission, lerp smoothing</span>
-  </a>
-  <a href="stage3.html">
-    Stage 3: Accelerometer → Position
-    <span>Physics, velocity/friction, push/pop, multiple shapes</span>
-  </a>
-  <a href="stage4.html">
-    Stage 4: Geolocation
-    <span>watchPosition, lat/lon → meters, GPS trail</span>
-  </a>
-  <a href="stage5.html">
-    Stage 5: Combined
-    <span>Tilt + GPS + speed → 3D landscape</span>
-  </a>
-  <a href="debug.html">
-    🛠 Debug: Motion Diagnostic
-    <span>Test if your device is sending accelerometer data</span>
-  </a>
-</body>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiona's Fan Page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/addons/p5.sound.min.js"></script>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <h1>Fiona's Fan Page</h1>
+      <p>By Gesell Gonzalez — #1 Fan</p>
+    </header>
+
+    <!-- BREED SECTION -->
+    <section id="breed">
+      <h2>About Fiona's Breed</h2>
+
+      <div class="breed-images">
+        <img src="https://www.akc.org/wp-content/uploads/2017/11/Shih-Tzu-On-White-01.jpg" alt="Shih Tzu">
+        <img src="https://www.akc.org/wp-content/uploads/2017/11/Miniature-Schnauzer-On-White-01.jpg" alt="Miniature Schnauzer">
+        <img src="media/fiona/mainFiona.jpg" alt="Fiona">
+      </div>
+
+      <p>Fiona is a Miniature Schnauzer mixed with Shih Tzu. She's pretty hypoallergenic, doesn't really shed, and weighs about 20 lbs. Her fur grows like hair and needs trimming every one to two months — in winter she keeps it long to stay warm.</p>
+
+      <p>She gets most of her looks from her Schnauzer side and her fur texture from her Shih Tzu side. She also has that classic Schnauzer instinct — she's been known to herd rodents into a corner, though she's never quite figured out what to do next.</p>
+
+      <p>
+        Learn more:
+        <a href="https://www.akc.org/dog-breeds/miniature-schnauzer" target="_blank">Miniature Schnauzer</a> ·
+        <a href="https://www.akc.org/dog-breeds/shih-tzu/" target="_blank">Shih Tzu</a>
+      </p>
+    </section>
+
+    <!-- PHOTOS SECTION -->
+    <section id="sketch3D">
+      <h2>Secret Photo Gallery</h2>
+      <p> In order to access Fiona's photos, you must enter the correct password (Hint: Who is new in Fiona's life?)</p>
+      <p> Once you are in, use the left and right arrow keys to cycle through her photos. Once you're done, zoom out for a surprise!</p>
+      <div id="sketch3D-canvas"></div>
+      <p id="sketch3D-counter" style="text-align: right; color: #888780; font-size: 0.85rem; margin-top: 0.5rem;"></p>
+      <script src="sketch3D.js"></script>
+    </section>
+
+    <!-- STORIES SECTION -->
+    <section id="stories">
+      <h2>Stories</h2>
+
+      <p><strong>The Howl</strong> — Fiona is 8 years old and had never once howled. Toward the end of 2025, her sister and I came home and I happened to be recording her — and caught her very first howl on camera.</p>
+      <video controls>
+        <source src="media/fiona/fionaHowl.mp4">
+      </video>
+
+      <p style="margin-top: 1.75rem;"><strong>Treadmill Buddy</strong> — Fiona also walks on the treadmill with my dad to keep themselves "accountable" on working out daily. (Or so they want me to believe.)</p>
+      <video controls>
+        <source src="media/fiona/fionaTreadmill.mp4">
+      </video>
+    </section>
+    
+    <!-- GAME SECTION -->
+    <section id="game">
+      <h2>A Day in the Life of Fiona: The Game</h2>
+      <div id="game-canvas"></div>
+      <script src="sketchGame.js"></script>
+    </section>
+
+    <!-- OUTRO SECTION -->
+    <section id="about">
+      <h2>Thank You</h2>
+      <p>Fiona is a grumpy, food-motivated dog who enjoys her alone time — but also loves being around family, especially her favorite human: grandpa. Check out her Instagram below.</p>
+
+      <div class="instagram-wrapper">
+        <blockquote class="instagram-media" data-instgrm-captioned
+          data-instgrm-permalink="https://www.instagram.com/p/DNeigX-MzYV/?utm_source=ig_embed&utm_campaign=loading"
+          data-instgrm-version="14"
+          style="background:#FFF; border:0; border-radius:8px; box-shadow:0 0 1px rgba(0,0,0,0.5),0 1px 10px rgba(0,0,0,0.15); max-width:540px; padding:0; width:100%;">
+        </blockquote>
+        <script async src="//www.instagram.com/embed.js"></script>
+      </div>
+    </section>
+
+    <!-- END PHOTOS -->
+    <section id="end-photos">
+      <h2>See You Next Time</h2>
+      <div id="heart-container">
+        <img src="media/fiona/fe1.jpeg" class="end" id="e1">
+        <img src="media/fiona/fe2.jpeg" class="end" id="e2">
+        <img src="media/fiona/fe3.jpeg" class="end" id="e3">
+        <img src="media/fiona/fe4.jpeg" class="end" id="e4">
+        <img src="media/fiona/fe5.jpeg" class="end" id="e5">
+        <img src="media/fiona/fe6.jpeg" class="end" id="e6">
+        <img src="media/fiona/fe7.jpeg" class="end" id="e7">
+        <img src="media/fiona/fe8.jpeg" class="end" id="e8">
+      </div>
+    </section>
+
+    <footer>
+      <p>Fiona's Fan Page made by her #1 fan!!!</p>
+    </footer>
+
+  </body>
 </html>

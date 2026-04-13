@@ -1,0 +1,242 @@
+/*
+  Color Palette:
+  - periwinkle-blue: ##c5d6f7   (page background)
+  - pink: #F7C5D5  (title, accents, hover)
+  - dark-blue: #2B4A7A  (headings, strong text)
+  - mid-blue: #5B85B8  (links, borders, dividers)
+  - white: #FFFFFF  (canvas backgrounds, inputs)
+*/
+
+/* ===== BASE ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, serif;
+  background: #c5d6f7;
+  color: #2B4A7A;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+}
+
+/* ===== HEADER ===== */
+header {
+  text-align: center;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid #5B85B8;
+  margin-bottom: 2.5rem;
+}
+
+header h1 {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 3.5rem;
+  font-weight: normal;
+  color: #F7C5D5;
+  text-shadow: 1px 2px 4px rgb(43, 74, 122);
+  letter-spacing: 1px;
+}
+
+header p {
+  color: #5B85B8;
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+}
+
+/* ===== SECTIONS ===== */
+section {
+  margin-bottom: 3rem;
+}
+
+section h2 {
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: #2B4A7A;
+  border-bottom: 1px solid #5B85B8;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+section p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+section a {
+  color: #5B85B8;
+  text-decoration: none;
+}
+
+section a:hover {
+  color: #F7C5D5;
+  text-decoration: underline;
+}
+
+/* ===== PHOTO GRID ===== */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1 fr));
+  gap: 10px;
+}
+
+.photo-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.photo-grid img[src=""] {
+  background: #5B85B8;
+  min-height: 180px;
+}
+
+/* ===== BREED IMAGES ===== */
+.breed-images {
+  display: flex;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  flex-wrap: wrap;
+}
+
+.breed-images img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 3px solid #F7C5D5;
+}
+
+/* ===== VIDEO ===== */
+video {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 1rem;
+  background: #5B85B8;
+  border: 5px solid #F7C5D5;
+}
+
+/* ===== PHOTO SUBSECTIONS ===== */
+.photo-subsection {
+  margin-bottom: 2rem;
+}
+
+.photo-subsection h3 {
+  font-weight: normal;
+  color: #5B85B8;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+/* ===== 3D SKETCH CANVAS ===== */
+#sketch3D-canvas {
+  display: block;
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  background: #2B4A7A;
+}
+
+#sketch3D-counter {
+  text-align: right;
+  color: #5B85B8;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== MINIGAME CANVAS ===== */
+#game-canvas {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  background: #2B4A7A;
+}
+
+/* ===== PASSWORD SCREEN ===== */
+#sketch3D-canvas input {
+  display: block;
+  margin: 1rem auto 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  color: #2B4A7A;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #5B85B8;
+  border-radius: 8px;
+  outline: none;
+  width: 200px;
+  text-align: center;
+}
+
+#sketch3D-canvas input:focus {
+  border-color: #F7C5D5;
+}
+
+#sketch3D-canvas button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.4rem 1.5rem;
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  color: #2B4A7A;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #5B85B8;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#sketch3D-canvas button:hover {
+  background: #F7C5D5;
+  border-color: #F7C5D5;
+  color: #2B4A7A;
+}
+
+#sketch3D-canvas p {
+  text-align: center;
+  color: #F7C5D5;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== INSTAGRAM EMBED ===== */
+.instagram-wrapper {
+  margin-top: 1rem;
+}
+
+/* ===== HEART PHOTO COLLAGE ===== */
+#heart-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.end {
+  position: absolute;
+  border-radius: 25px;
+  border: 4px double #F7C5D5;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  box-shadow: 6px 6px 20px rgba(43, 74, 122, 0.3);
+}
+
+#e1 { top: 80px;  left: 340px; }
+#e2 { top: 20px;  left: 220px; }
+#e3 { top: 20px;  left: 460px; }
+#e4 { top: 80px;  left: 100px; }
+#e5 { top: 80px;  left: 570px; }
+#e6 { top: 180px; left: 160px; }
+#e7 { top: 180px; left: 500px; }
+#e8 { top: 280px; left: 330px; }
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  color: #5B85B8;
+  font-size: 0.85rem;
+  padding-top: 2rem;
+  border-top: 1px solid #5B85B8;
+}
