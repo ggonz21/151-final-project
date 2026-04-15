@@ -19,10 +19,6 @@ new p5(function(p) {
     "media/fiona/f27.jpeg", "media/fiona/f28.jpeg"
   ];
   
-  let unlocked = false;
-  let password = "Penny"; 
-  let pwInput, pwButton, pwError;
-  
   p.preload = function(){
     bgTexture = p.loadImage("media/other/p.jpeg");
     
@@ -34,35 +30,9 @@ new p5(function(p) {
   p.setup = function() {
     let cnv = p.createCanvas(document.getElementById('sketch3D-canvas').offsetWidth, 500, p.WEBGL);
     cnv.parent('sketch3D-canvas');
-    
-    // Password Input for user
-    pwInput = p.createInput('');
-    pwInput.attribute('type', 'text');
-    pwInput.attribute('placeholder', 'Enter Password');
-    pwInput.parent('sketch3D-canvas');
-    
-    // Submit password button
-    pwButton = p.createButton('Enter');
-    pwButton.parent('sketch3D-canvas');
-    pwButton.mousePressed(checkPassword);
-    
-    // Incorrect Password
-    pwError = p.createElement('p', '');
-    pwError.parent('sketch3D-canvas');
-    
-    pwInput.elt.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') checkPassword();
-    });
-    
-    updateCounter();
   }
   
   p.draw = function() {
-    if(unlocked == false){
-      p.background(0);
-      return;
-    }
-    
     p.orbitControl(1,1,0.5);
     
     p.background(0);
@@ -76,18 +46,6 @@ new p5(function(p) {
     
     p.texture(textures[currentIndex]);
     p.plane(350, 350);
-  }
-  
-  function checkPassword(){
-    if(pwInput.value() == password) {
-      unlocked = true;
-      
-      pwInput.remove();
-      pwButton.remove();
-      pwError.remove();
-      updateCounter();
-    }
-    else pwError.html('Incorrect password, try again!');
   }
   
   // Change to left and right arrow keys

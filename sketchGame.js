@@ -107,7 +107,7 @@ new p5(function(p) {
   }
 
   // SCENE: BEDROOM
-    function drawBedroom() {
+  function drawBedroom() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
 
     handleMovement();
@@ -116,8 +116,6 @@ new p5(function(p) {
     if (!windowDone) {
       p.noFill();
       p.noStroke();
-      // p.stroke(255, 0, 0);
-      // p.strokeWeight(2);
       p.rect(windowZone.x, windowZone.y, windowZone.w, windowZone.h);
     }
 
@@ -125,8 +123,6 @@ new p5(function(p) {
     if (!toyDone) {
       p.noFill();
       p.noStroke();
-      // p.stroke(255, 0, 0);
-      // p.strokeWeight(2);
       p.rect(toyZone.x, toyZone.y, toyZone.w, toyZone.h);
       p.image(toyImg, toyZone.x, toyZone.y, toyZone.w, toyZone.h);
     }
@@ -135,8 +131,6 @@ new p5(function(p) {
     if (windowDone && toyDone) {
       p.noFill();
       p.noStroke();
-      // p.stroke(255, 0, 0);
-      // p.strokeWeight(2);
       p.rect(bedZone.x, bedZone.y, bedZone.w, bedZone.h);
     }
 
@@ -181,13 +175,8 @@ new p5(function(p) {
     let elapsed = (p.millis() - windowTimerStart) / 1000;
     let remaining = p.max(0, windowTimer - elapsed);
 
-    if (remaining <= 0 && windowResult === '') {
-      windowResult = 'fail';
-    }
-
-    if (windowResult === '') {
-      p.image(nathanImg, nathan.x, nathan.y, nathan.w, nathan.h);
-    }
+    if (remaining <= 0 && windowResult === '') windowResult = 'fail';
+    if (windowResult === '') p.image(nathanImg, nathan.x, nathan.y, nathan.w, nathan.h);
 
     // Time and Score
     p.noStroke();
@@ -285,7 +274,8 @@ new p5(function(p) {
         sleepDone = true;
         sleepTextVisible = true;
       }
-    } else {
+    } 
+    else {
       p.background(0);
 
       if (sleepTextVisible) {
@@ -304,63 +294,53 @@ new p5(function(p) {
       }
     }
 
-    if (arrowVisible) {
-      p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
-    }
+    if (arrowVisible) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
   }
 
-//   // ============================================================
-//   // SCENE: BASEMENT
-//   // ============================================================
-//   function drawBasement() {
-//     p.image(basementImg, 0, 0, p.width, p.height);
+  // SCENE: BASEMENT
+  function drawBasement() {
+    p.image(basementImg, 0, 0, p.width, p.height);
 
-//     handleMovement();
+    handleMovement();
 
-//     p.noFill();
-//     p.stroke(255, 0, 0);
-//     p.strokeWeight(2);
-//     p.rect(basementDoor.x, basementDoor.y, basementDoor.w, basementDoor.h);
+    p.noFill();
+    p.stroke(255, 0, 0);
+    p.strokeWeight(2);
+    p.rect(basementDoor.x, basementDoor.y, basementDoor.w, basementDoor.h);
 
-//     p.image(fionaImg, player.x, player.y, player.w, player.h);
+    p.image(fionaImg, player.x, player.y, player.w, player.h);
 
-//     if (!meowPlayed && overlaps(player, basementDoor)) {
-//       meowPlayed = true;
-//       meowSound.play();
-//       basementArrow = true;
-//       arrow.x = p.width - 90;
-//       arrow.y = p.height / 2 - 25;
-//     }
+    if (!meowPlayed && overlaps(player, basementDoor)) {
+      meowPlayed = true;
+      meowSound.play();
+      basementArrow = true;
+      arrow.x = p.width - 90;
+      arrow.y = p.height / 2 - 25;
+    }
 
-//     if (basementArrow) {
-//       p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
-//     }
-//   }
+    if (basementArrow) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
+  }
 
-//   // ============================================================
-//   // SCENE: END
-//   // ============================================================
-//   function drawEnd() {
-//     p.background(0);
-//     p.textAlign(p.CENTER);
-//     p.noStroke();
+  // SCENE: END
+  function drawEnd() {
+    p.background(0);
+    p.textAlign(p.CENTER);
+    p.noStroke();
 
-//     p.textFont('Brush Script MT');
-//     p.textSize(80);
-//     p.fill(247, 197, 213);
-//     // PLACEHOLDER — replace with your final screen text
-//     p.text("Penny", p.width / 2, p.height / 2 - 20);
+    p.textFont('Brush Script MT');
+    p.textSize(80);
+    p.fill(247, 197, 213);
+    
+    // PLACEHOLDER — replace with your final screen text
+    p.text("Penny", p.width / 2, p.height / 2 - 20);
 
-//     p.textFont('Georgia');
-//     p.textSize(13);
-//     p.fill(180);
-//     p.text("click to play again", p.width / 2, p.height / 2 + 50);
-//   }
+    p.textFont('Georgia');
+    p.textSize(13);
+    p.fill(180);
+    p.text("click to play again", p.width / 2, p.height / 2 + 50);
+  }
 
-//   // ============================================================
-//   // HELPERS
-//   // ============================================================
-
+  // Other functions
   function handleMovement() {
     if (p.keyIsDown(65)) player.x -= player.speed;
     if (p.keyIsDown(68)) player.x += player.speed;
@@ -429,10 +409,12 @@ new p5(function(p) {
       scene = 'bedroom';
       resetPlayer();
       textboxVisible = true;
+      
       // PLACEHOLDER — bedroom intro text
       textboxLines = [
         "Fiona wakes up in the bedroom.",
-        "She contemplates on what to do first. Bark at the strangers who are lurking outside, waiting to break into her home, or play with her toys because she deserves the break?",
+        "She contemplates on what to do first. Bark at the strangers who are lurking outside, waiting to break into her home", 
+        "or play with her toys because she needs to train?",
         "Use WASD to move."
       ];
       return false;
@@ -479,7 +461,8 @@ new p5(function(p) {
         resetPlayer();
         textboxVisible = true;
         textboxLines = [
-          "Fiona had a great time playing, nothing beats the thrill of the chase."
+          "Fiona had a great time playing, err, she meant training",
+          "She was for sure training."
         ];
       }
       return false;

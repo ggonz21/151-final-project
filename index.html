@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiona's Fan Page</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/addons/p5.sound.min.js"></script>
   </head>
   <body>
@@ -26,9 +26,8 @@
       </div>
 
       <p>Fiona is a Miniature Schnauzer mixed with Shih Tzu. She's pretty hypoallergenic, doesn't really shed, and weighs about 20 lbs. Her fur grows like hair and needs trimming every one to two months — in winter she keeps it long to stay warm.</p>
-
       <p>She gets most of her looks from her Schnauzer side and her fur texture from her Shih Tzu side. She also has that classic Schnauzer instinct — she's been known to herd rodents into a corner, though she's never quite figured out what to do next.</p>
-
+      
       <p>
         Learn more:
         <a href="https://www.akc.org/dog-breeds/miniature-schnauzer" target="_blank">Miniature Schnauzer</a> ·
@@ -37,14 +36,32 @@
     </section>
 
     <!-- PHOTOS SECTION -->
-    <section id="sketch3D">
+      <h2>Secret Photo Gallery</h2>
+      <p> In order to access Fiona's photos, you must enter the correct password (Hint: Who is new in Fiona's life?)</p>  
+
+      <input type="password" id="passwordField" placeholder="Enter password">
+      <button onclick="checkPassword()">Login</button>
+
+      <p id="message" style="color: red;"></p>
+
+      <script>
+        function checkPassword() {
+          const password = document.getElementById("passwordField").value;
+          const correctPassword = "Penny"; 
+
+          if (password === correctPassword) window.location.href = "/gallery.html";
+          else document.getElementById("message").innerText = "Incorrect password. Try again.";
+        }
+      </script>
+      
+    <!-- <section id="sketch3D">
       <h2>Secret Photo Gallery</h2>
       <p> In order to access Fiona's photos, you must enter the correct password (Hint: Who is new in Fiona's life?)</p>
       <p> Once you are in, use the left and right arrow keys to cycle through her photos. Once you're done, zoom out for a surprise!</p>
       <div id="sketch3D-canvas"></div>
       <p id="sketch3D-counter" style="text-align: right; color: #888780; font-size: 0.85rem; margin-top: 0.5rem;"></p>
       <script src="sketch3D.js"></script>
-    </section>
+    </section> -->
 
     <!-- STORIES SECTION -->
     <section id="stories">
@@ -62,11 +79,14 @@
     </section>
     
     <!-- GAME SECTION -->
-    <section id="game">
+    <h2>A Day in the Life of Fiona: The Game</h2>
+    <a href="/game.html">Go Play!</a>
+
+    <!-- <section id="game">
       <h2>A Day in the Life of Fiona: The Game</h2>
       <div id="game-canvas"></div>
       <script src="sketchGame.js"></script>
-    </section>
+    </section> -->
 
     <!-- OUTRO SECTION -->
     <section id="about">
