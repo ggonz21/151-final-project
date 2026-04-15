@@ -1,43 +1,25 @@
-// new p5(function(p) {
-//   p.setup = function() {
-//     let cnv = p.createCanvas(document.getElementById('game-canvas').offsetWidth, 500);
-//     cnv.parent('game-canvas');
-//   }
-//   p.draw = function() {
-//     p.background(255);
-//   }
-//   p.windowResized = function() {
-//     p.resizeCanvas(document.getElementById('game-canvas').offsetWidth, 500);
-//   }
-// });
-
 new p5(function(p) {
 
   // My assets 
   let fionaImg, toyImg, nathanImg, arrowImg;
-  let bedroomImg, outsideImg, sleepingImg, basementImg;
+  let bedroomImg, outsideImg, sleepImg, basementImg;
   let barkSound, meowSound;
 
-  // Scenes: 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
+  // Scenes will be names instead of numbers (had a hard time last project): 
+  // 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
   let scene = 'start';
-
-  // Player (AKA Fiona)
-  let player = {x: 300, y: 350, speed: 3, w: 70, h: 70 };
+  let player = {x: 300, y: 350, speed: 3, w: 70, h: 70 }; // Player (AKA Fiona)
 
   // Minigame states
   let windowDone = false;
   let toyDone = false;
 
-  // Window interaction zone
-  let windowZone = { x: 330, y: 60, w: 160, h: 130 };
-
-  // Toy starting position in bedroom
+  // Interaction zones
+  let windowZone = { x: 330, y: 60, w: 160, h: 130 }; // Window
   let toyZone = { x: 80, y: 300, w: 70, h: 70 };
-
-  // Bed zone 
   let bedZone = { x: 150, y: 340, w: 380, h: 120 };
 
-  // Textbox for story telling
+  // Textboxes
   let textboxVisible = false;
   let textboxLines = [];
 
@@ -76,11 +58,11 @@ new p5(function(p) {
   p.preload = function() {
     fionaImg = p.loadImage("media/game/fiona.png");
     toyImg = p.loadImage('media/game/toy.png');
-    // nathanImg = p.loadImage('media/game/nathan.png');
-    // arrowImg = p.loadImage('media/game/arrow.png');
+    nathanImg = p.loadImage('media/game/nathan.png');
+    arrowImg = p.loadImage('media/game/arrow.png');
     bedroomImg = p.loadImage('media/game/bedroom.jpeg');
-    // outsideImg = p.loadImage('media/game/outside.jpg');
-    // sleepingImg = p.loadImage('media/game/sleep.jpeg');
+    outsideImg = p.loadImage('media/game/outside.jpeg');
+    sleepImg = p.loadImage('media/game/sleep.jpeg');
     basementImg = p.loadImage('media/game/basement.jpeg');
 
     barkSound = p.loadSound('media/game/bark.mp3');
@@ -97,11 +79,11 @@ new p5(function(p) {
   p.draw = function() {
     if (scene === 'start') drawStart();
     else if (scene === 'bedroom') drawBedroom();
-    // else if (scene === 'window_game') drawWindowGame();
-    // else if (scene === 'toy_game') drawToyGame();
-    // else if (scene === 'sleep_anim') drawSleepAnim();
-    // else if (scene === 'basement') drawBasement();
-    // else if (scene === 'end') drawEnd();
+    else if (scene === 'window_game') drawWindowGame();
+    else if (scene === 'toy_game') drawToyGame();
+    else if (scene === 'sleep') drawSleepAnim();
+    else if (scene === 'basement') drawBasement();
+    else if (scene === 'end') drawEnd();
   }
 
   // SCENE: START
@@ -180,125 +162,115 @@ new p5(function(p) {
     if (textboxVisible) drawTextbox(textboxLines);
   }
 
-//   // ============================================================
-//   // SCENE: WINDOW MINIGAME
-//   // ============================================================
-//   function startWindowGame() {
-//     scene = 'window_game';
-//     nathanClicks = 0;
-//     windowResult = '';
-//     windowTimerStart = p.millis();
-//     randomizeNathan();
-//     textboxVisible = false;
-//   }
+  // SCENE: WINDOW MINIGAME
+  function startWindowGame() {
+    scene = 'window_game';
+    nathanClicks = 0;
+    windowResult = '';
+    windowTimerStart = p.millis();
+    randomizeNathan();
+    textboxVisible = false;
+  }
 
-//   function drawWindowGame() {
-//     p.image(outsideImg, 0, 0, p.width, p.height);
+  function drawWindowGame() {
+    p.image(outsideImg, 0, 0, p.width, p.height);
 
-//     let elapsed = (p.millis() - windowTimerStart) / 1000;
-//     let remaining = p.max(0, windowTimer - elapsed);
+    let elapsed = (p.millis() - windowTimerStart) / 1000;
+    let remaining = p.max(0, windowTimer - elapsed);
 
-//     if (remaining <= 0 && windowResult === '') {
-//       windowResult = 'fail';
-//     }
+    if (remaining <= 0 && windowResult === '') {
+      windowResult = 'fail';
+    }
 
-//     if (windowResult === '') {
-//       p.image(nathanImg, nathan.x, nathan.y, nathan.w, nathan.h);
-//     }
+    if (windowResult === '') {
+      p.image(nathanImg, nathan.x, nathan.y, nathan.w, nathan.h);
+    }
 
-//     // HUD
-//     p.noStroke();
-//     p.fill(255);
-//     p.textSize(14);
-//     p.textAlign(p.LEFT);
-//     p.text("Barks: " + nathanClicks + " / " + nathanNeeded, 12, 24);
-//     p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
+    // HUD
+    p.noStroke();
+    p.fill(255);
+    p.textSize(14);
+    p.textAlign(p.LEFT);
+    p.text("Barks: " + nathanClicks + " / " + nathanNeeded, 12, 24);
+    p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
 
-//     if (windowResult === 'fail') {
-//       drawOverlay("Fiona missed them! Try again?", true);
-//     } else if (windowResult === 'win') {
-//       drawOverlay("Good girl! Click to continue.", false);
-//     }
-//   }
+    if (windowResult === 'fail') {
+      drawOverlay("Fiona missed them! Try again?", true);
+    } else if (windowResult === 'win') {
+      drawOverlay("Good girl! Click to continue.", false);
+    }
+  }
 
-//   function randomizeNathan() {
-//     nathan.x = p.random(20, p.width - nathan.w - 20);
-//     nathan.y = p.random(20, p.height - nathan.h - 100);
-//   }
+  function randomizeNathan() {
+    nathan.x = p.random(20, p.width - nathan.w - 20);
+    nathan.y = p.random(20, p.height - nathan.h - 100);
+  }
 
-//   // ============================================================
-//   // SCENE: TOY MINIGAME
-//   // ============================================================
-//   function startToyGame() {
-//     scene = 'toy_game';
-//     toyCatches = 0;
-//     toyResult = '';
-//     toyTimerStart = p.millis();
-//     toyMoving.x = p.random(50, p.width - 100);
-//     toyMoving.y = p.random(50, p.height - 150);
-//     textboxVisible = false;
-//   }
+  // SCENE: TOY MINIGAME
+  function startToyGame() {
+    scene = 'toy_game';
+    toyCatches = 0;
+    toyResult = '';
+    toyTimerStart = p.millis();
+    toyMoving.x = p.random(50, p.width - 100);
+    toyMoving.y = p.random(50, p.height - 150);
+    textboxVisible = false;
+  }
 
-//   function drawToyGame() {
-//     p.image(bedroomImg, 0, 0, p.width, p.height);
+  function drawToyGame() {
+    p.image(bedroomImg, 0, 0, p.width, p.height);
 
-//     let elapsed = (p.millis() - toyTimerStart) / 1000;
-//     let remaining = p.max(0, toyTimer - elapsed);
+    let elapsed = (p.millis() - toyTimerStart) / 1000;
+    let remaining = p.max(0, toyTimer - elapsed);
 
-//     if (remaining <= 0 && toyResult === '') {
-//       toyResult = 'fail';
-//     }
+    if (remaining <= 0 && toyResult === '') toyResult = 'fail';
 
-//     if (toyResult === '') {
-//       // Move toy
-//       toyMoving.x += toySpeed.x;
-//       toyMoving.y += toySpeed.y;
-//       if (toyMoving.x < 0 || toyMoving.x > p.width - toyMoving.w)  toySpeed.x *= -1;
-//       if (toyMoving.y < 0 || toyMoving.y > p.height - toyMoving.h - 60) toySpeed.y *= -1;
+    if (toyResult === '') {
+      // Move toy
+      toyMoving.x += toySpeed.x;
+      toyMoving.y += toySpeed.y;
+      if (toyMoving.x < 0 || toyMoving.x > p.width - toyMoving.w)  toySpeed.x *= -1;
+      if (toyMoving.y < 0 || toyMoving.y > p.height - toyMoving.h - 60) toySpeed.y *= -1;
 
-//       // Toy with red outline
-//       p.noFill();
-//       p.stroke(255, 0, 0);
-//       p.strokeWeight(2);
-//       p.rect(toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
-//       p.image(toyImg, toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
+      // Toy with red outline
+      p.noFill();
+      p.stroke(255, 0, 0);
+      p.strokeWeight(2);
+      p.rect(toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
+      p.image(toyImg, toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
 
-//       // Player
-//       handleMovement();
-//       p.image(fionaImg, player.x, player.y, player.w, player.h);
+      // Player
+      handleMovement();
+      p.image(fionaImg, player.x, player.y, player.w, player.h);
 
-//       // Check catch
-//       if (overlaps(player, toyMoving)) {
-//         toyCatches++;
-//         if (toyCatches >= toyNeeded) {
-//           toyResult = 'win';
-//         } else {
-//           toyMoving.x = p.random(50, p.width - 100);
-//           toyMoving.y = p.random(50, p.height - 150);
-//         }
-//       }
-//     }
+      // Check catch
+      if (overlaps(player, toyMoving)) {
+        toyCatches++;
+        if (toyCatches >= toyNeeded) toyResult = 'win';
+        else {
+          toyMoving.x = p.random(50, p.width - 100);
+          toyMoving.y = p.random(50, p.height - 150);
+        }
+      }
+    }
 
-//     // HUD
-//     p.noStroke();
-//     p.fill(255);
-//     p.textSize(14);
-//     p.textAlign(p.LEFT);
-//     p.text("Catches: " + toyCatches + " / " + toyNeeded, 12, 24);
-//     p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
+    // HUD
+    p.noStroke();
+    p.fill(255);
+    p.textSize(14);
+    p.textAlign(p.LEFT);
+    p.text("Catches: " + toyCatches + " / " + toyNeeded, 12, 24);
+    p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
 
-//     if (toyResult === 'fail') {
-//       drawOverlay("Fiona missed the toy! Try again?", true);
-//     } else if (toyResult === 'win') {
-//       drawOverlay("Fiona got it! Click to continue.", false);
-//     }
-//   }
+    if (toyResult === 'fail') drawOverlay("Fiona missed the toy! Try again?", true);
+    else if (toyResult === 'win') drawOverlay("Fiona got it! Click to continue.", false);
+  }
 
 //   // ============================================================
 //   // SCENE: SLEEP ANIMATION
 //   // ============================================================
 //   function drawSleepAnim() {
-//     p.image(sleepingImg, 0, 0, p.width, p.height);
+//     p.image(sleepImg, 0, 0, p.width, p.height);
 
 //     if (!sleepDone) {
 //       sleepProgress = p.min(sleepProgress + 0.008, 1);
@@ -391,10 +363,10 @@ new p5(function(p) {
 //   // ============================================================
 
   function handleMovement() {
-    if (p.keyIsDown(p.LEFT_ARROW)  || p.keyIsDown(65)) player.x -= player.speed;
-    if (p.keyIsDown(p.RIGHT_ARROW) || p.keyIsDown(68)) player.x += player.speed;
-    if (p.keyIsDown(p.UP_ARROW)    || p.keyIsDown(87)) player.y -= player.speed;
-    if (p.keyIsDown(p.DOWN_ARROW)  || p.keyIsDown(83)) player.y += player.speed;
+    if (p.keyIsDown(65)) player.x -= player.speed;
+    if (p.keyIsDown(68)) player.x += player.speed;
+    if (p.keyIsDown(87)) player.y -= player.speed;
+    if (p.keyIsDown(83)) player.y += player.speed;
     player.x = p.constrain(player.x, 0, p.width - player.w);
     player.y = p.constrain(player.y, 0, p.height - player.h);
   }
@@ -461,7 +433,8 @@ new p5(function(p) {
       // PLACEHOLDER — bedroom intro text
       textboxLines = [
         "Fiona wakes up in the bedroom.",
-        "What should she do first? Use arrow keys or WASD to move."
+        "She contemplates on what to do first. Bark at the strangers who are lurking outside, waiting to break into her home, or play with her toys because she deserves the break?",
+        "Use WASD to move."
       ];
       return false;
     }
@@ -478,28 +451,21 @@ new p5(function(p) {
           p.mouseY > nathan.y && p.mouseY < nathan.y + nathan.h) {
         barkSound.play();
         nathanClicks++;
-        if (nathanClicks >= nathanNeeded) {
-          windowResult = 'win';
-        } else {
-          randomizeNathan();
-        }
+        if (nathanClicks >= nathanNeeded) windowResult = 'win';
+        else randomizeNathan();
       }
       return false;
     }
 
     // WINDOW MINIGAME — retry or continue
     if (scene === 'window_game' && windowResult !== '') {
-      if (windowResult === 'fail') {
-        startWindowGame();
-      } else {
+      if (windowResult === 'fail') {startWindowGame();} else {
         windowDone = true;
         scene = 'bedroom';
         resetPlayer();
         textboxVisible = true;
-        // PLACEHOLDER — text after window minigame win
         textboxLines = [
-          "Fiona barked at every stranger outside!",
-          "Good girl. Anything else to do?"
+          "Fiona barked at every stranger outside! No one is breaking in today, especially not Nathan",
         ];
       }
       return false;
@@ -507,17 +473,14 @@ new p5(function(p) {
 
     // TOY MINIGAME — retry or continue
     if (scene === 'toy_game' && toyResult !== '') {
-      if (toyResult === 'fail') {
-        startToyGame();
-      } else {
+      if (toyResult === 'fail') startToyGame();
+      else {
         toyDone = true;
         scene = 'bedroom';
         resetPlayer();
         textboxVisible = true;
-        // PLACEHOLDER — text after toy minigame win
         textboxLines = [
-          "Fiona played her heart out!",
-          "Time to wind down."
+          "Fiona had a great time playing, nothing beats the thrill of the chase."
         ];
       }
       return false;
