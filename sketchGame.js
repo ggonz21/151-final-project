@@ -1,3 +1,6 @@
+// Things to work on: 
+// - Change bark.mp3 to a singluar bark
+
 new p5(function(p) {
 
   // My assets 
@@ -7,27 +10,27 @@ new p5(function(p) {
 
   // Scenes will be names instead of numbers (had a hard time last project): 
   // 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
-  let scene = 'start';
-  let player = {x: 300, y: 350, speed: 3, w: 70, h: 70 }; // Player (AKA Fiona)
+  let scene = 'window_game'; // change to start
+  let player = {x: 300, y: 350, speed: 3, w: 100, h: 120 }; // Player (AKA Fiona)
 
   // Minigame states
-  let windowDone = false;
-  let toyDone = false;
+  let windowDone = false; 
+  let toyDone = false; 
 
   // Interaction zones
-  let windowZone = { x: 330, y: 60, w: 160, h: 130 }; // Window
+  let windowZone = { x: 330, y: 60, w: 120, h: 130 }; // Window
   let toyZone = { x: 80, y: 300, w: 70, h: 70 };
-  let bedZone = { x: 150, y: 340, w: 380, h: 120 };
+  let bedZone = { x: 0, y: 340, w: 80, h: 70 };
 
   // Textboxes
   let textboxVisible = false;
   let textboxLines = [];
 
-  // Window minigame: Clicking Nathan 3 times under time limit (adjust?)
-  let nathan = { x: 200, y: 150, w: 60, h: 90 };
+  // Window minigame: Clicking Nathan 10 times under time limit 
+  let nathan = { x: 200, y: 150, w: 80, h: 40 };
   let nathanClicks = 0;
-  let nathanNeeded = 3;
-  let windowTimer = 10;
+  let nathanNeeded = 10;
+  let windowTimer = 15;
   let windowTimerStart = 0;
   let windowResult = '';
 
@@ -95,8 +98,8 @@ new p5(function(p) {
     p.textFont('Brush Script MT');
     p.textSize(54);
     p.fill(247, 197, 213);
-    p.noStroke();
-    p.text("A Day with Fiona", p.width / 2, 170);
+    p.stroke(0);
+    p.text("A Day in the Life of Fiona", p.width / 2, 170);
 
     p.image(fionaImg, p.width / 2 - 40, 200, 80, 80);
 
@@ -115,25 +118,28 @@ new p5(function(p) {
     // Window zone
     if (!windowDone) {
       p.noFill();
-      p.stroke(255, 0, 0);
-      p.strokeWeight(2);
+      p.noStroke();
+      // p.stroke(255, 0, 0);
+      // p.strokeWeight(2);
       p.rect(windowZone.x, windowZone.y, windowZone.w, windowZone.h);
     }
 
     // Toy zone
     if (!toyDone) {
       p.noFill();
-      p.stroke(255, 0, 0);
-      p.strokeWeight(2);
+      p.noStroke();
+      // p.stroke(255, 0, 0);
+      // p.strokeWeight(2);
       p.rect(toyZone.x, toyZone.y, toyZone.w, toyZone.h);
       p.image(toyImg, toyZone.x, toyZone.y, toyZone.w, toyZone.h);
     }
 
-    // Bed zone — only after both minigames done
+    // Bed zone (available only after both minigames have been done)
     if (windowDone && toyDone) {
       p.noFill();
-      p.stroke(255, 0, 0);
-      p.strokeWeight(2);
+      p.noStroke();
+      // p.stroke(255, 0, 0);
+      // p.strokeWeight(2);
       p.rect(bedZone.x, bedZone.y, bedZone.w, bedZone.h);
     }
 
@@ -186,19 +192,18 @@ new p5(function(p) {
       p.image(nathanImg, nathan.x, nathan.y, nathan.w, nathan.h);
     }
 
-    // HUD
+    // Time and Score
     p.noStroke();
     p.fill(255);
-    p.textSize(14);
+    p.rect(0, 0, 140, 60);
+    p.fill(237, 119, 192);
+    p.textSize(20);
     p.textAlign(p.LEFT);
     p.text("Barks: " + nathanClicks + " / " + nathanNeeded, 12, 24);
     p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
 
-    if (windowResult === 'fail') {
-      drawOverlay("Fiona missed them! Try again?", true);
-    } else if (windowResult === 'win') {
-      drawOverlay("Good girl! Click to continue.", false);
-    }
+    if (windowResult === 'fail') drawOverlay("Fiona missed them! Try again?", true);
+    else if (windowResult === 'win') drawOverlay("Fiona did amazing! Click to continue.", false);
   }
 
   function randomizeNathan() {
@@ -226,20 +231,18 @@ new p5(function(p) {
     if (remaining <= 0 && toyResult === '') toyResult = 'fail';
 
     if (toyResult === '') {
-      // Move toy
       toyMoving.x += toySpeed.x;
       toyMoving.y += toySpeed.y;
       if (toyMoving.x < 0 || toyMoving.x > p.width - toyMoving.w)  toySpeed.x *= -1;
       if (toyMoving.y < 0 || toyMoving.y > p.height - toyMoving.h - 60) toySpeed.y *= -1;
 
-      // Toy with red outline
+      // Toy 
       p.noFill();
-      p.stroke(255, 0, 0);
-      p.strokeWeight(2);
+      p.noStroke();
       p.rect(toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
       p.image(toyImg, toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
 
-      // Player
+      // Player (AKA Fiona)
       handleMovement();
       p.image(fionaImg, player.x, player.y, player.w, player.h);
 
@@ -254,10 +257,12 @@ new p5(function(p) {
       }
     }
 
-    // HUD
+    // Time and Score
     p.noStroke();
     p.fill(255);
-    p.textSize(14);
+    p.rect(0, 0, 140, 60);
+    p.fill(237, 119, 192);
+    p.textSize(20);
     p.textAlign(p.LEFT);
     p.text("Catches: " + toyCatches + " / " + toyNeeded, 12, 24);
     p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
@@ -266,49 +271,46 @@ new p5(function(p) {
     else if (toyResult === 'win') drawOverlay("Fiona got it! Click to continue.", false);
   }
 
-//   // ============================================================
-//   // SCENE: SLEEP ANIMATION
-//   // ============================================================
-//   function drawSleepAnim() {
-//     p.image(sleepImg, 0, 0, p.width, p.height);
+  // SCENE: SLEEP CUTSCENE (Mini Animation)
+  function drawSleepAnim() {
+    p.image(sleepImg, 0, 0, p.width, p.height);
 
-//     if (!sleepDone) {
-//       sleepProgress = p.min(sleepProgress + 0.008, 1);
-//       let barH = (p.height / 2) * sleepProgress;
+    if (!sleepDone) {
+      sleepProgress = p.min(sleepProgress + 0.008, 1);
+      let barH = (p.height / 2) * sleepProgress;
 
-//       p.noStroke();
-//       p.fill(0);
-//       p.rect(0, 0, p.width, barH);
-//       p.rect(0, p.height - barH, p.width, barH);
+      p.noStroke();
+      p.fill(0);
+      p.rect(0, 0, p.width, barH);
+      p.rect(0, p.height - barH, p.width, barH);
 
-//       if (sleepProgress >= 1) {
-//         sleepDone = true;
-//         sleepTextVisible = true;
-//       }
-//     } else {
-//       p.background(0);
+      if (sleepProgress >= 1) {
+        sleepDone = true;
+        sleepTextVisible = true;
+      }
+    } else {
+      p.background(0);
 
-//       if (sleepTextVisible) {
-//         p.textAlign(p.CENTER);
-//         p.noStroke();
-//         p.fill(255);
-//         p.textSize(16);
-//         // PLACEHOLDER — replace with your own sleep text
-//         p.text("Fiona drifts off to sleep...", p.width / 2, p.height / 2 - 30);
-//         p.text("But something stirs downstairs.", p.width / 2, p.height / 2);
+      if (sleepTextVisible) {
+        p.textAlign(p.CENTER);
+        p.noStroke();
+        p.fill(255);
+        p.textSize(16);
+        p.text("Fiona drifts off to sleep...", p.width / 2, p.height / 2 - 30);
+        p.text("But there is a smell in the air she doesn't recognize. An intruder?!", p.width / 2, p.height / 2);
 
-//         if (!arrowVisible) {
-//           arrowVisible = true;
-//           arrow.x = p.width / 2 - 35;
-//           arrow.y = p.height / 2 + 40;
-//         }
-//       }
-//     }
+        if (!arrowVisible) {
+          arrowVisible = true;
+          arrow.x = p.width / 2 - 35;
+          arrow.y = p.height / 2 + 40;
+        }
+      }
+    }
 
-//     if (arrowVisible) {
-//       p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
-//     }
-//   }
+    if (arrowVisible) {
+      p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
+    }
+  }
 
 //   // ============================================================
 //   // SCENE: BASEMENT
