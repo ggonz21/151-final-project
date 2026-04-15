@@ -1,6 +1,3 @@
-// Things to work on: 
-// - Change bark.mp3 to a singluar bark
-
 new p5(function(p) {
 
   // My assets 
@@ -10,7 +7,7 @@ new p5(function(p) {
 
   // Scenes will be names instead of numbers (had a hard time last project): 
   // 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
-  let scene = 'window_game'; // change to start
+  let scene = 'start'; // change to start
   let player = {x: 300, y: 350, speed: 3, w: 100, h: 120 }; // Player (AKA Fiona)
 
   // Minigame states
