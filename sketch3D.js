@@ -50,7 +50,6 @@ new p5(function(p) {
   
   // Change to left and right arrow keys
   p.mousePressed = function(){
-    if (unlocked == false) return;
     if (p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height) {
       currentIndex = (currentIndex + 1) % textures.length;
       updateCounter();
