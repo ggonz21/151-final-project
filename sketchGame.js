@@ -3,7 +3,7 @@ new p5(function(p) {
   // My assets 
   let fionaImg, toyImg, nathanImg, arrowImg;
   let bedroomImg, outsideImg, sleepImg, basementImg;
-  let barkSound, meowSound;
+  let barkSound, meowSound, squeakSound;
 
   // Scenes will be names instead of numbers (had a hard time last project): 
   // 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
@@ -67,6 +67,7 @@ new p5(function(p) {
 
     barkSound = p.loadSound('media/game/bark.mp3');
     meowSound = p.loadSound('media/game/meow.mp3');
+    squeakSound = p.loadSound('media/game/squeak.mp3');
   }
 
   // SETUP
@@ -253,8 +254,8 @@ new p5(function(p) {
     p.text("Catches: " + toyCatches + " / " + toyNeeded, 12, 24);
     p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
 
-    if (toyResult === 'fail') drawOverlay("Fiona missed the toy! Try again?", true);
-    else if (toyResult === 'win') drawOverlay("Fiona got it! Click to continue.", false);
+    if (toyResult === 'fail') drawOverlay("Fiona didn't complete her training...", true);
+    else if (toyResult === 'win') drawOverlay("Fiona got it done! Click to continue.", false);
   }
 
   // SCENE: SLEEP CUTSCENE (Mini Animation)

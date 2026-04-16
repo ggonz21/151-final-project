@@ -18,12 +18,33 @@ new p5(function(p) {
     "media/fiona/f25.jpeg", "media/fiona/f26.jpeg",
     "media/fiona/f27.jpeg", "media/fiona/f28.jpeg"
   ];
+
+  let texturesTata = [];
+  let currentIndexTata = 0;
+  let imagePathsTata = [
+    "media/other/tata1.jpeg", "media/other/tata2.jpeg",
+    "media/other/tata3.jpeg", "media/other/tata4.jpeg",
+    "media/other/tata5.jpeg"
+  ];
+
+  let texturesOther = [];
+  let currentIndexOther = 0;
+  let imagePathsOther = [
+    "media/other/birthdayToy.jpeg", "media/other/firstToy.jpeg",
+    "media/other/smokeAlarm.jpeg", "media/other/treats.jpeg",
+    "media/other/food.jpeg"
+  ];
   
   p.preload = function(){
     bgTexture = p.loadImage("media/other/p.jpeg");
     
     for(let i = 0; i < imagePaths.length; i++){
       textures.push(p.loadImage(imagePaths[i]));
+    }
+
+    for(let i = 0; i < imagePathsTata.length; i++){ // Tata and other have same length
+      texturesTata.push(p.loadImage(imagePathsTata[i]));
+      texturesOther.push(p.loadImage(imagePathsOther[i]));
     }
   }
   
@@ -47,23 +68,19 @@ new p5(function(p) {
     p.texture(textures[currentIndex]);
     p.plane(350, 350);
   }
-  
-  // Change to left and right arrow keys
-  p.mousePressed = function(){
-    if (p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height) {
+
+  p.keyPressed = function(){
+    if(p.keyCode === p.RIGHT_ARROW) {
       currentIndex = (currentIndex + 1) % textures.length;
-      updateCounter();
     }
-    return false;
+
+    if (p.keyCode === p.LEFT_ARROW) {
+      currentIndex = (currentIndex - 1 + textures.length) % textures.length;
+    }
   }
 
   p.windowResized = function() {
     p.resizeCanvas(document.getElementById('sketch3D-canvas').offsetWidth, 500);
-  }
-  
-  function updateCounter() {
-    document.getElementById('sketch3D-counter').textContent =
-      (currentIndex + 1) + " / " + textures.length;
   }
   
 });

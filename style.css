@@ -131,6 +131,49 @@ video {
   font-size: 0.8rem;
 }
 
+/* ===== PASSWORD GATE ===== */
+#passwordField {
+  display: block;
+  margin: 1rem 0 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  color: #2B4A7A;
+  background: #ffffff;
+  border: 1px solid #7BAFD4;
+  border-radius: 8px;
+  outline: none;
+  width: 220px;
+}
+
+#passwordField:focus {
+  border-color: #2B4A7A;
+}
+
+#passwordField + button {
+  display: inline-block;
+  padding: 0.45rem 1.5rem;
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  color: #2B4A7A;
+  background: #ffffff;
+  border: 1px solid #2B4A7A;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+#passwordField + button:hover {
+  background: #F7C5D5;
+  border-color: #F7C5D5;
+}
+
+#message {
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  min-height: 1.2rem;
+}
+
 /* ===== 3D SKETCH CANVAS ===== */
 #sketch3D-canvas {
   display: block;
@@ -147,58 +190,33 @@ video {
   margin-top: 0.5rem;
 }
 
+/* ===== GAME LINK BUTTON ===== */
+#game-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 2rem;
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  color: #2B4A7A;
+  background: #ffffff;
+  border: 1px solid #2B4A7A;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#game-link:hover {
+  background: #F7C5D5;
+  border-color: #F7C5D5;
+  color: #2B4A7A;
+}
+
 /* ===== MINIGAME CANVAS ===== */
 #game-canvas {
   width: 100%;
   height: 500px;
   border-radius: 8px;
   background: #2B4A7A;
-}
-
-/* ===== PASSWORD SCREEN ===== */
-#sketch3D-canvas input {
-  display: block;
-  margin: 1rem auto 0.5rem;
-  padding: 0.5rem 1rem;
-  font-family: Georgia, serif;
-  font-size: 0.95rem;
-  color: #2B4A7A;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #5B85B8;
-  border-radius: 8px;
-  outline: none;
-  width: 200px;
-  text-align: center;
-}
-
-#sketch3D-canvas input:focus {
-  border-color: #F7C5D5;
-}
-
-#sketch3D-canvas button {
-  display: block;
-  margin: 0 auto;
-  padding: 0.4rem 1.5rem;
-  font-family: Georgia, serif;
-  font-size: 0.9rem;
-  color: #2B4A7A;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #5B85B8;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#sketch3D-canvas button:hover {
-  background: #F7C5D5;
-  border-color: #F7C5D5;
-  color: #2B4A7A;
-}
-
-#sketch3D-canvas p {
-  text-align: center;
-  color: #F7C5D5;
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
 }
 
 /* ===== INSTAGRAM EMBED ===== */
