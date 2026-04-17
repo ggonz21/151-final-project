@@ -7,12 +7,13 @@ new p5(function(p) {
 
   // Scenes will be names instead of numbers (had a hard time last project): 
   // 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
-  let scene = 'basement'; // change to start
+  let scene = 'start'; // change to start
   let player = {x: 300, y: 350, speed: 3, w: 100, h: 120 }; // Player (AKA Fiona)
 
   // Minigame states
   let windowDone = false; 
   let toyDone = false; 
+  let bothDoneTextShown = false;
 
   // Interaction zones
   let windowZone = { x: 330, y: 60, w: 120, h: 130 }; // Window
@@ -23,6 +24,7 @@ new p5(function(p) {
   // Textboxes
   let textboxVisible = false;
   let textboxLines = [];
+  let textboxIndex = 0; // NEW
 
   // Window minigame: Clicking Nathan 10 times under time limit 
   let nathan = { x: 200, y: 150, w: 80, h: 40 };
@@ -49,6 +51,7 @@ new p5(function(p) {
   
   // Arrow for user to go to see basement door
   let arrow = { x: 0, y: 0, w: 70, h: 50 };
+  let basementIntroShown = false; // NEW
 
   // Basement door after sleep animation
   let meowPlayed = false;
@@ -105,6 +108,7 @@ new p5(function(p) {
     p.textSize(15);
     p.fill(43, 74, 122);
     p.text("click to start", p.width / 2, 340);
+    textboxIndex = 0;
   }
 
   // SCENE: BEDROOM
@@ -147,14 +151,36 @@ new p5(function(p) {
       startToyGame();
       return;
     }
-    if (windowDone && toyDone && overlaps(player, bedZone)) {
-      scene = 'sleep';
-      sleepProgress = 0;
-      sleepDone = false;
-      sleepTextVisible = false;
-      arrowVisible = false;
-      textboxVisible = false;
-      return;
+    // if (windowDone && toyDone && overlaps(player, bedZone)) {
+    //   scene = 'sleep';
+    //   sleepProgress = 0;
+    //   sleepDone = false;
+    //   sleepTextVisible = false;
+    //   arrowVisible = false;
+    //   textboxVisible = false;
+    //   return;
+    // }
+
+    if (windowDone && toyDone) { // NEW
+      if (!bothDoneTextShown) {
+        bothDoneTextShown = true;
+        textboxVisible = true;
+        textboxLines = [
+          "Fiona feels as though she has done a wonderful job.",
+          "She is quite tired, after all, she's on call 24/7",
+          "Maybe a nap in her bed would do her good before her next shift"
+        ];
+        textboxIndex = 0;
+      }
+
+      if (!textboxVisible && overlaps(player, bedZone)) {
+        scene = 'sleep';
+        sleepProgress = 0;
+        sleepDone = false;
+        sleepTextVisible = false;
+        arrowVisible = false;
+        return;
+      }
     }
 
     if (textboxVisible) drawTextbox(textboxLines);
@@ -299,8 +325,54 @@ new p5(function(p) {
   }
 
   // SCENE: BASEMENT
+  // function drawBasement() {
+  //   p.image(basementImg, 0, 0, p.width, p.height);
+
+  //   if (basementIntroShown === false) { // NEW
+  //     basementIntroShown = true;
+  //     textboxVisible = true;
+  //     textboxLines = ["Fiona smells the intruder in the basement."];
+  //     textboxIndex = 0;
+  //   }
+
+  //   handleMovement();
+
+  //   p.noFill();
+  //   p.noStroke();
+  //   p.rect(basementDoor.x, basementDoor.y, basementDoor.w, basementDoor.h);
+
+  //   p.image(fionaImg, player.x, player.y, player.w, player.h);
+
+  //   // if (!meowPlayed && overlaps(player, basementDoor)) {
+  //   //   meowPlayed = true;
+  //   //   meowSound.play();
+  //   //   basementArrow = true;
+  //   //   arrow.x = p.width - 90;
+  //   //   arrow.y = p.height / 2 - 25;
+  //   // }
+
+  //   // if (basementArrow) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
+
+  //   if (!meowPlayed && overlaps(player, basementDoor)) { // NEW
+  //     meowPlayed = true;
+  //     meowSound.play();
+  //     textboxVisible = true;
+  //     textboxLines = ["Fiona's feeder human spoke to her: 'Fiona, did you find Penny already?'"];
+  //     textboxIndex = 0;
+  //   }
+
+  //   if (!textboxVisible && meowPlayed) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h); // NEW
+  // }
+
   function drawBasement() {
     p.image(basementImg, 0, 0, p.width, p.height);
+
+    if (!basementIntroShown) {
+      basementIntroShown = true;
+      textboxVisible = true;
+      textboxLines = ["Fiona smells the intruder in the basement."];
+      textboxIndex = 0;
+    }
 
     handleMovement();
 
@@ -310,15 +382,18 @@ new p5(function(p) {
 
     p.image(fionaImg, player.x, player.y, player.w, player.h);
 
-    if (!meowPlayed && overlaps(player, basementDoor)) {
+    if (!meowPlayed && !textboxVisible && overlaps(player, basementDoor)) {
       meowPlayed = true;
       meowSound.play();
-      basementArrow = true;
       arrow.x = p.width - 90;
       arrow.y = p.height / 2 - 25;
+      textboxVisible = true;
+      textboxLines = ["Fiona's feeder human spoke to her: 'Fiona, did you find Penny already?'"];
+      textboxIndex = 0;
     }
 
-    if (basementArrow) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
+    if (!textboxVisible && meowPlayed) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
+    if (textboxVisible) drawTextbox(textboxLines);
   }
 
   // SCENE: END
@@ -331,8 +406,7 @@ new p5(function(p) {
     p.textSize(80);
     p.fill(247, 197, 213);
     
-    // PLACEHOLDER — replace with your final screen text
-    p.text("Penny", p.width / 2, p.height / 2 - 20);
+    p.text("Fiona did not know what a Penny was", p.width / 2, p.height / 2 - 20);
 
     p.textFont('Georgia');
     p.textSize(13);
@@ -357,16 +431,29 @@ new p5(function(p) {
            a.y + a.h > b.y;
   }
 
-  function drawTextbox(lines) {
+  // function drawTextbox(lines) {
+  //   p.noStroke();
+  //   p.fill(0, 0, 0, 170);
+  //   p.rect(0, p.height - 90, p.width, 90);
+  //   p.fill(255);
+  //   p.textSize(13);
+  //   p.textAlign(p.LEFT);
+  //   for (let i = 0; i < lines.length; i++) {
+  //     p.text(lines[i], 16, p.height - 68 + i * 22);
+  //   }
+  // }
+
+  function drawTextbox(lines) { // NEW
     p.noStroke();
     p.fill(0, 0, 0, 170);
     p.rect(0, p.height - 90, p.width, 90);
     p.fill(255);
     p.textSize(13);
     p.textAlign(p.LEFT);
-    for (let i = 0; i < lines.length; i++) {
-      p.text(lines[i], 16, p.height - 68 + i * 22);
-    }
+    p.text(lines[textboxIndex], 16, p.height - 68);
+    p.fill(180);
+    p.textSize(11);
+    p.text("[ space to continue ]", 16, p.height - 18);
   }
 
   function drawOverlay(msg, canRetry) {
@@ -398,6 +485,9 @@ new p5(function(p) {
     textboxVisible = false;
     sleepProgress = 0;
     sleepDone = false;
+    basementIntroShown = false; // NEW
+    bothDoneTextShown = false; // NEW
+
     resetPlayer();
   }
 
@@ -410,13 +500,13 @@ new p5(function(p) {
       resetPlayer();
       textboxVisible = true;
       
-      // PLACEHOLDER — bedroom intro text
       textboxLines = [
         "Fiona wakes up in the bedroom.",
         "She contemplates on what to do first. Bark at the strangers who are lurking outside, waiting to break into her home", 
         "or play with her toys because she needs to train?",
         "Use WASD to move."
       ];
+      textboxIndex = 0; // NEW
       return false;
     }
 
@@ -448,6 +538,7 @@ new p5(function(p) {
         textboxLines = [
           "Fiona barked at every stranger outside! No one is breaking in today, especially not Nathan",
         ];
+        textboxIndex = 0; // NEW
       }
       return false;
     }
@@ -462,8 +553,10 @@ new p5(function(p) {
         textboxVisible = true;
         textboxLines = [
           "Fiona had a great time playing, err, she meant training",
-          "She was for sure training."
+          "She was for sure training.",
+          "What is there next to do?"
         ];
+        textboxIndex = 0;
       }
       return false;
     }
@@ -481,7 +574,7 @@ new p5(function(p) {
     }
 
     // BASEMENT — click arrow to end
-    if (scene === 'basement' && basementArrow) {
+    if (scene === 'basement' && meowPlayed && !textboxVisible) {
       if (p.mouseX > arrow.x && p.mouseX < arrow.x + arrow.w &&
           p.mouseY > arrow.y && p.mouseY < arrow.y + arrow.h) {
         scene = 'end';
@@ -490,6 +583,17 @@ new p5(function(p) {
     }
 
     return false;
+  }
+
+  p.keyPressed = function() { // NEW
+    if (p.key === ' ' && textboxVisible) {
+      textboxIndex++;
+      if (textboxIndex >= textboxLines.length) {
+        textboxVisible = false;
+        textboxIndex = 0; // NEW
+      }
+      return false;
+    }
   }
 
   p.windowResized = function() {
