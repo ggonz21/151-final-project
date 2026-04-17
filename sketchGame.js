@@ -7,7 +7,7 @@ new p5(function(p) {
 
   // Scenes will be names instead of numbers (had a hard time last project): 
   // 'start', 'bedroom', 'window_game', 'toy_game', 'sleep', 'basement', 'end'
-  let scene = 'start'; // change to start
+  let scene = 'basement'; // change to start
   let player = {x: 300, y: 350, speed: 3, w: 100, h: 120 }; // Player (AKA Fiona)
 
   // Minigame states
@@ -18,6 +18,7 @@ new p5(function(p) {
   let windowZone = { x: 330, y: 60, w: 120, h: 130 }; // Window
   let toyZone = { x: 80, y: 300, w: 70, h: 70 };
   let bedZone = { x: 0, y: 340, w: 80, h: 70 };
+  let basementDoor = { x: 130, y: 50, w: 150, h: 320 };
 
   // Textboxes
   let textboxVisible = false;
@@ -50,7 +51,6 @@ new p5(function(p) {
   let arrow = { x: 0, y: 0, w: 70, h: 50 };
 
   // Basement door after sleep animation
-  let basementDoor = { x: 160, y: 80, w: 110, h: 320 };
   let meowPlayed = false;
   let basementArrow = false;
 
@@ -305,8 +305,7 @@ new p5(function(p) {
     handleMovement();
 
     p.noFill();
-    p.stroke(255, 0, 0);
-    p.strokeWeight(2);
+    p.noStroke();
     p.rect(basementDoor.x, basementDoor.y, basementDoor.w, basementDoor.h);
 
     p.image(fionaImg, player.x, player.y, player.w, player.h);
@@ -470,7 +469,7 @@ new p5(function(p) {
     }
 
     // SLEEP ANIMATION — click arrow
-    if (scene === 'sleep_anim' && arrowVisible) {
+    if (scene === 'sleep' && arrowVisible) {
       if (p.mouseX > arrow.x && p.mouseX < arrow.x + arrow.w &&
           p.mouseY > arrow.y && p.mouseY < arrow.y + arrow.h) {
         scene = 'basement';

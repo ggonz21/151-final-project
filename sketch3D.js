@@ -11,25 +11,25 @@ new p5(function(p) {
     "media/fiona/f21.jpeg", "media/fiona/f22.jpeg", "media/fiona/f23.jpeg", "media/fiona/f24.jpeg",
     "media/fiona/f25.jpeg", "media/fiona/f26.jpeg", "media/fiona/f27.jpeg", "media/fiona/f28.jpeg"
   ];
-  let rotY = 0;
-
   let texturesTata = [];
   let imagePathsTata = [
     "media/other/tata1.jpeg", "media/other/tata2.jpeg",
     "media/other/tata3.jpeg", "media/other/tata4.jpeg",
     "media/other/tata5.jpeg"
   ];
-
   let texturesOther = [];
   let imagePathsOther = [
     "media/other/birthdayToy.jpeg", "media/other/firstToy.jpeg",
     "media/other/smokeAlarm.jpeg", "media/other/treats.jpeg",
     "media/other/food.jpeg"
   ];
+  let rotY = 0;
+  let font;
   
   p.preload = function(){
     bgTexture = p.loadImage("media/other/p.jpeg");
     bgTextureMain = p.loadImage("media/other/hearts.jpeg");
+    font = p.loadFont("media/other/PlayfairDisplay-VariableFont_wght.ttf")
     
     for(let i = 0; i < imagePaths.length; i++){
       textures.push(p.loadImage(imagePaths[i]));
@@ -44,7 +44,6 @@ new p5(function(p) {
   p.setup = function() {
     let cnv = p.createCanvas(document.getElementById('sketch3D-canvas').offsetWidth, 500, p.WEBGL);
     cnv.parent('sketch3D-canvas');
-    // p.angleMode(DEGREES);
   }
   
   p.draw = function() {
@@ -66,8 +65,11 @@ new p5(function(p) {
       p.texture(bgTexture);
       p.sphere(3000);
     p.pop();
-    
 
+    p.textFont(font);
+    p.textSize(300);
+    p.text('Meet Penny!', -3700, -2000, 500);
+    
     // Fiona Images
     p.push();
       p.rotateY(rotY / 2);
