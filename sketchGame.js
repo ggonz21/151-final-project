@@ -151,15 +151,6 @@ new p5(function(p) {
       startToyGame();
       return;
     }
-    // if (windowDone && toyDone && overlaps(player, bedZone)) {
-    //   scene = 'sleep';
-    //   sleepProgress = 0;
-    //   sleepDone = false;
-    //   sleepTextVisible = false;
-    //   arrowVisible = false;
-    //   textboxVisible = false;
-    //   return;
-    // }
 
     if (windowDone && toyDone) { // NEW
       if (!bothDoneTextShown) {
@@ -324,46 +315,6 @@ new p5(function(p) {
     if (arrowVisible) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
   }
 
-  // SCENE: BASEMENT
-  // function drawBasement() {
-  //   p.image(basementImg, 0, 0, p.width, p.height);
-
-  //   if (basementIntroShown === false) { // NEW
-  //     basementIntroShown = true;
-  //     textboxVisible = true;
-  //     textboxLines = ["Fiona smells the intruder in the basement."];
-  //     textboxIndex = 0;
-  //   }
-
-  //   handleMovement();
-
-  //   p.noFill();
-  //   p.noStroke();
-  //   p.rect(basementDoor.x, basementDoor.y, basementDoor.w, basementDoor.h);
-
-  //   p.image(fionaImg, player.x, player.y, player.w, player.h);
-
-  //   // if (!meowPlayed && overlaps(player, basementDoor)) {
-  //   //   meowPlayed = true;
-  //   //   meowSound.play();
-  //   //   basementArrow = true;
-  //   //   arrow.x = p.width - 90;
-  //   //   arrow.y = p.height / 2 - 25;
-  //   // }
-
-  //   // if (basementArrow) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
-
-  //   if (!meowPlayed && overlaps(player, basementDoor)) { // NEW
-  //     meowPlayed = true;
-  //     meowSound.play();
-  //     textboxVisible = true;
-  //     textboxLines = ["Fiona's feeder human spoke to her: 'Fiona, did you find Penny already?'"];
-  //     textboxIndex = 0;
-  //   }
-
-  //   if (!textboxVisible && meowPlayed) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h); // NEW
-  // }
-
   function drawBasement() {
     p.image(basementImg, 0, 0, p.width, p.height);
 
@@ -430,18 +381,6 @@ new p5(function(p) {
            a.y < b.y + b.h &&
            a.y + a.h > b.y;
   }
-
-  // function drawTextbox(lines) {
-  //   p.noStroke();
-  //   p.fill(0, 0, 0, 170);
-  //   p.rect(0, p.height - 90, p.width, 90);
-  //   p.fill(255);
-  //   p.textSize(13);
-  //   p.textAlign(p.LEFT);
-  //   for (let i = 0; i < lines.length; i++) {
-  //     p.text(lines[i], 16, p.height - 68 + i * 22);
-  //   }
-  // }
 
   function drawTextbox(lines) { // NEW
     p.noStroke();
