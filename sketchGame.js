@@ -24,7 +24,7 @@ new p5(function(p) {
   // Textboxes
   let textboxVisible = false;
   let textboxLines = [];
-  let textboxIndex = 0; // NEW
+  let textboxIndex = 0; 
 
   // Window minigame: Clicking Nathan 10 times under time limit 
   let nathan = { x: 200, y: 150, w: 80, h: 40 };
@@ -51,7 +51,7 @@ new p5(function(p) {
   
   // Arrow for user to go to see basement door
   let arrow = { x: 0, y: 0, w: 70, h: 50 };
-  let basementIntroShown = false; // NEW
+  let basementIntroShown = false; 
 
   // Basement door after sleep animation
   let meowPlayed = false;
@@ -152,7 +152,7 @@ new p5(function(p) {
       return;
     }
 
-    if (windowDone && toyDone) { // NEW
+    if (windowDone && toyDone) { 
       if (!bothDoneTextShown) {
         bothDoneTextShown = true;
         textboxVisible = true;
@@ -253,6 +253,7 @@ new p5(function(p) {
       // Check catch
       if (overlaps(player, toyMoving)) {
         toyCatches++;
+        squeakSound.play();
         if (toyCatches >= toyNeeded) toyResult = 'win';
         else {
           toyMoving.x = p.random(50, p.width - 100);
@@ -382,7 +383,7 @@ new p5(function(p) {
            a.y + a.h > b.y;
   }
 
-  function drawTextbox(lines) { // NEW
+  function drawTextbox(lines) { 
     p.noStroke();
     p.fill(0, 0, 0, 170);
     p.rect(0, p.height - 90, p.width, 90);
@@ -424,8 +425,8 @@ new p5(function(p) {
     textboxVisible = false;
     sleepProgress = 0;
     sleepDone = false;
-    basementIntroShown = false; // NEW
-    bothDoneTextShown = false; // NEW
+    basementIntroShown = false; 
+    bothDoneTextShown = false; 
 
     resetPlayer();
   }
@@ -445,17 +446,17 @@ new p5(function(p) {
         "or play with her toys because she needs to train?",
         "Use WASD to move."
       ];
-      textboxIndex = 0; // NEW
+      textboxIndex = 0; 
       return false;
     }
 
-    // END — restart
+    // END
     if (scene === 'end') {
       resetGame();
       return false;
     }
 
-    // WINDOW MINIGAME — click Nathan
+    // WINDOW MINIGAME 
     if (scene === 'window_game' && windowResult === '') {
       if (p.mouseX > nathan.x && p.mouseX < nathan.x + nathan.w &&
           p.mouseY > nathan.y && p.mouseY < nathan.y + nathan.h) {
@@ -467,9 +468,10 @@ new p5(function(p) {
       return false;
     }
 
-    // WINDOW MINIGAME — retry or continue
+    // WINDOW MINIGAME 
     if (scene === 'window_game' && windowResult !== '') {
-      if (windowResult === 'fail') {startWindowGame();} else {
+      if (windowResult === 'fail') startWindowGame();
+      else {
         windowDone = true;
         scene = 'bedroom';
         resetPlayer();
@@ -477,12 +479,12 @@ new p5(function(p) {
         textboxLines = [
           "Fiona barked at every stranger outside! No one is breaking in today, especially not Nathan",
         ];
-        textboxIndex = 0; // NEW
+        textboxIndex = 0; 
       }
       return false;
     }
 
-    // TOY MINIGAME — retry or continue
+    // TOY MINIGAME 
     if (scene === 'toy_game' && toyResult !== '') {
       if (toyResult === 'fail') startToyGame();
       else {
@@ -512,7 +514,7 @@ new p5(function(p) {
       return false;
     }
 
-    // BASEMENT — click arrow to end
+    // BASEMENT 
     if (scene === 'basement' && meowPlayed && !textboxVisible) {
       if (p.mouseX > arrow.x && p.mouseX < arrow.x + arrow.w &&
           p.mouseY > arrow.y && p.mouseY < arrow.y + arrow.h) {
@@ -524,12 +526,12 @@ new p5(function(p) {
     return false;
   }
 
-  p.keyPressed = function() { // NEW
+  p.keyPressed = function() { 
     if (p.key === ' ' && textboxVisible) {
       textboxIndex++;
       if (textboxIndex >= textboxLines.length) {
         textboxVisible = false;
-        textboxIndex = 0; // NEW
+        textboxIndex = 0; 
       }
       return false;
     }
