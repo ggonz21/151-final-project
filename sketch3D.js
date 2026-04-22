@@ -80,7 +80,6 @@ new p5(function(p) {
       p.plane(700, 700);
     p.pop();
 
-    
     // Fiona Images
     p.push();
       p.rotateY(rotY / 2);

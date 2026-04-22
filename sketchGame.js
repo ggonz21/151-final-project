@@ -1,5 +1,4 @@
 new p5(function(p) {
-
   // My assets 
   let fionaImg, toyImg, nathanImg, arrowImg;
   let bedroomImg, outsideImg, sleepImg, basementImg;
@@ -128,7 +127,6 @@ new p5(function(p) {
     p.text("click to start", p.width / 2, 340);
   }
 
-
   // SCENE: BEDROOM
   function drawBedroom() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
@@ -165,7 +163,6 @@ new p5(function(p) {
     if (textboxVisible) drawTextbox(textboxLines);
   }
 
-
   // SCENE: WINDOW INTRO
   function drawWindowIntro() {
     p.image(outsideImg, 0, 0, p.width, p.height);
@@ -198,7 +195,6 @@ new p5(function(p) {
     p.text("click anywhere to start", p.width / 2, 340);
   }
 
-
   // SCENE: TOY INTRO
   function drawToyIntro() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
@@ -230,7 +226,6 @@ new p5(function(p) {
     p.textSize(13);
     p.text("click anywhere to start", p.width / 2, 340);
   }
-
 
   // SCENE: WINDOW MINIGAME
   function startWindowGame() {
@@ -268,7 +263,6 @@ new p5(function(p) {
     nathan.x = p.random(20, p.width  - nathan.w - 20);
     nathan.y = p.random(20, p.height - nathan.h - 100);
   }
-
 
   // SCENE: TOY MINIGAME
   function startToyGame() {
@@ -320,7 +314,6 @@ new p5(function(p) {
     else if (toyResult === 'win') drawOverlay("Fiona got it done! Click to continue.", false);
   }
 
-
   // SCENE: SLEEP
   function drawSleepAnim() {
     p.image(sleepImg, 0, 0, p.width, p.height);
@@ -351,7 +344,6 @@ new p5(function(p) {
 
     if (arrowVisible) p.image(arrowImg, arrow.x, arrow.y, arrow.w, arrow.h);
   }
-
 
   // SCENE: BASEMENT
   function drawBasement() {
@@ -571,7 +563,6 @@ new p5(function(p) {
       }
       return false;
     }
-
     return false;
   }
 
