@@ -19,7 +19,7 @@ new p5(function(p) {
 
   // Scenes: 'start', 'bedroom', 'window_intro', 'window_game', 'toy_intro', 'toy_game', 'sleep', 'basement', 'end'
   let scene = 'start';
-  let player = { x: 300, y: 350, speed: 3, w: 100, h: 120 };
+  let player = {x: 300, y: 350, speed: 3, w: 100, h: 120};
 
   // Minigame states
   let windowDone = false;
@@ -27,10 +27,10 @@ new p5(function(p) {
   let bothDoneTextShown = false;
 
   // Interaction zones
-  let windowZone = { x: 330, y: 60,  w: 120, h: 130 };
-  let toyZone = { x: 80,  y: 300, w: 70,  h: 70  };
-  let bedZone = { x: 0,   y: 340, w: 80,  h: 70  };
-  let basementDoor = { x: 130, y: 50,  w: 150, h: 320 };
+  let windowZone = {x: 330, y: 60, w: 120, h: 130 };
+  let toyZone = {x: 80, y: 300, w: 70, h: 70  };
+  let bedZone = {x: 0, y: 340, w: 80, h: 70  };
+  let basementDoor = {x: 130, y: 50, w: 150, h: 320 };
 
   // Textboxes
   let textboxVisible = false;
@@ -38,7 +38,7 @@ new p5(function(p) {
   let textboxIndex = 0;
 
   // Window minigame
-  let nathan = { x: 200, y: 150, w: 80, h: 40 };
+  let nathan = {x: 200, y: 150, w: 80, h: 40 };
   let nathanClicks = 0;
   let nathanNeeded = 10;
   let windowTimer = 15;
@@ -46,8 +46,8 @@ new p5(function(p) {
   let windowResult = '';
 
   // Toy minigame
-  let toyMoving = { x: 200, y: 200, w: 60, h: 60 };
-  let toySpeed = { x: 2.5, y: 2 };
+  let toyMoving = {x: 200, y: 200, w: 60, h: 60 };
+  let toySpeed = {x: 2.5, y: 2 };
   let toyCatches = 0;
   let toyNeeded = 5;
   let toyTimer = 15;
@@ -67,17 +67,17 @@ new p5(function(p) {
   // ------------------------------------------------------------------------------------------------
   // PRELOAD
   p.preload = function() {
-    fionaImg    = p.loadImage('media/game/fiona.png');
-    toyImg      = p.loadImage('media/game/toy.png');
-    nathanImg   = p.loadImage('media/game/nathan.png');
-    arrowImg    = p.loadImage('media/game/arrow.png');
-    bedroomImg  = p.loadImage('media/game/bedroom.jpeg');
-    outsideImg  = p.loadImage('media/game/outside.jpeg');
-    sleepImg    = p.loadImage('media/game/sleep.jpeg');
+    fionaImg = p.loadImage('media/game/fiona.png');
+    toyImg = p.loadImage('media/game/toy.png');
+    nathanImg = p.loadImage('media/game/nathan.png');
+    arrowImg = p.loadImage('media/game/arrow.png');
+    bedroomImg = p.loadImage('media/game/bedroom.jpeg');
+    outsideImg = p.loadImage('media/game/outside.jpeg');
+    sleepImg = p.loadImage('media/game/sleep.jpeg');
     basementImg = p.loadImage('media/game/basement.jpeg');
 
-    barkSound   = p.loadSound('media/game/bark.mp3');
-    meowSound   = p.loadSound('media/game/meow.mp3');
+    barkSound = p.loadSound('media/game/bark.mp3');
+    meowSound = p.loadSound('media/game/meow.mp3');
     squeakSound = p.loadSound('media/game/squeak.mp3');
 
     for (let i = 0; i < imagePaths.length; i++) {
@@ -284,7 +284,7 @@ new p5(function(p) {
   function drawToyGame() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
 
-    let elapsed   = (p.millis() - toyTimerStart) / 1000;
+    let elapsed = (p.millis() - toyTimerStart) / 1000;
     let remaining = p.max(0, toyTimer - elapsed);
 
     if (remaining <= 0 && toyResult === '') toyResult = 'fail';
@@ -492,7 +492,6 @@ new p5(function(p) {
   // INPUT
 
   p.mousePressed = function() {
-
     if (scene === 'start') {
       scene = 'bedroom';
       resetPlayer();
@@ -504,6 +503,7 @@ new p5(function(p) {
         "or play with her toys because she needs to train?",
         "Use WASD to move."
       ];
+      
       textboxIndex = 0;
       return false;
     }

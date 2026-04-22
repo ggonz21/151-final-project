@@ -1,5 +1,5 @@
 new p5(function(p) {
-  let bgTexture, bgTextureMain;
+  let bgTexture, bgTextureMain, nathanTexture;
   let textures = [];
   let currentIndex = 0;
   let imagePaths = [
@@ -27,9 +27,10 @@ new p5(function(p) {
   let font;
   
   p.preload = function(){
-    bgTexture = p.loadImage("media/other/p.jpeg");
+    bgTexture = p.loadImage("media/other/penny.jpeg");
     bgTextureMain = p.loadImage("media/other/hearts.jpeg");
-    font = p.loadFont("media/other/PlayfairDisplay-VariableFont_wght.ttf")
+    nathanTexture = p.loadImage("media/game/nathan.png");
+    font = p.loadFont("media/other/PlayfairDisplay-VariableFont_wght.ttf");
     
     for(let i = 0; i < imagePaths.length; i++){
       textures.push(p.loadImage(imagePaths[i]));
@@ -66,9 +67,19 @@ new p5(function(p) {
       p.sphere(3000);
     p.pop();
 
+    // Text in the top left
     p.textFont(font);
     p.textSize(300);
     p.text('Meet Penny!', -3700, -2000, 500);
+
+    // Nathan in the bottom right spinning
+    p.push();
+      p.translate(2400, 1300, 2000); 
+      p.rotateY(rotY);
+      p.texture(nathanTexture);
+      p.plane(700, 700);
+    p.pop();
+
     
     // Fiona Images
     p.push();
@@ -124,7 +135,6 @@ new p5(function(p) {
       p.rotateY(rotY * 2);
       p.texture(texturesOther[4]);
       p.box(150, 150);
-      // p.sphere(100, 10, 10);
     p.pop();
 
     p.push();
@@ -132,7 +142,6 @@ new p5(function(p) {
       p.rotateY(rotY * 2);
       p.texture(texturesOther[3]);
       p.box(150, 150);
-      // p.sphere(100, 10, 10);
     p.pop();
 
     p.push();
@@ -140,7 +149,6 @@ new p5(function(p) {
       p.rotateY(rotY * 2);
       p.texture(texturesOther[2]);
       p.box(150, 150);
-      // p.sphere(100, 10, 10);
     p.pop();
     
     p.push();
@@ -148,7 +156,6 @@ new p5(function(p) {
       p.rotateY(rotY * 2);
       p.texture(texturesOther[1]);
       p.box(150, 150);
-      // p.sphere(100, 10, 10);
     p.pop();
     
     p.push();
@@ -156,7 +163,6 @@ new p5(function(p) {
       p.rotateY(rotY * 2);
       p.texture(texturesOther[0]);
       p.box(150, 150);
-      // p.sphere(100, 10, 10);
     p.pop();
     
     rotY += 0.02;
