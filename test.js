@@ -17,7 +17,7 @@ new p5(function(p) {
     "media/fiona/f25.jpeg", "media/fiona/f26.jpeg", "media/fiona/f27.jpeg", "media/fiona/f28.jpeg"
   ];
 
-  // Scenes: 'start', 'bedroom', 'window_intro', 'window_game', toy_intro', 'toy_game', 'sleep', 'basement', 'end'
+  // Scenes: 'start', 'bedroom', 'window_intro', 'window_game', 'toy_intro', 'toy_game', 'sleep', 'basement', 'end'
   let scene = 'start';
   let player = { x: 300, y: 350, speed: 3, w: 100, h: 120 };
 
@@ -57,29 +57,27 @@ new p5(function(p) {
   // Sleep animation
   let sleepProgress = 0;
   let sleepDone = false;
-  let sleepTextVisible = false;
   let arrowVisible = false;
 
+  // Basement
   let arrow = { x: 0, y: 0, w: 70, h: 50 };
   let basementIntroShown = false;
-
   let meowPlayed = false;
-  let basementArrow = false;
 
   // ------------------------------------------------------------------------------------------------
   // PRELOAD
   p.preload = function() {
-    fionaImg = p.loadImage('media/game/fiona.png');
-    toyImg = p.loadImage('media/game/toy.png');
-    nathanImg = p.loadImage('media/game/nathan.png');
-    arrowImg = p.loadImage('media/game/arrow.png');
-    bedroomImg = p.loadImage('media/game/bedroom.jpeg');
-    outsideImg = p.loadImage('media/game/outside.jpeg');
-    sleepImg = p.loadImage('media/game/sleep.jpeg');
+    fionaImg    = p.loadImage('media/game/fiona.png');
+    toyImg      = p.loadImage('media/game/toy.png');
+    nathanImg   = p.loadImage('media/game/nathan.png');
+    arrowImg    = p.loadImage('media/game/arrow.png');
+    bedroomImg  = p.loadImage('media/game/bedroom.jpeg');
+    outsideImg  = p.loadImage('media/game/outside.jpeg');
+    sleepImg    = p.loadImage('media/game/sleep.jpeg');
     basementImg = p.loadImage('media/game/basement.jpeg');
 
-    barkSound = p.loadSound('media/game/bark.mp3');
-    meowSound = p.loadSound('media/game/meow.mp3');
+    barkSound   = p.loadSound('media/game/bark.mp3');
+    meowSound   = p.loadSound('media/game/meow.mp3');
     squeakSound = p.loadSound('media/game/squeak.mp3');
 
     for (let i = 0; i < imagePaths.length; i++) {
@@ -128,7 +126,6 @@ new p5(function(p) {
     p.fill(43, 74, 122);
     p.noStroke();
     p.text("click to start", p.width / 2, 340);
-    textboxIndex = 0;
   }
 
 
@@ -138,33 +135,12 @@ new p5(function(p) {
     ghostPhotos(false);
     handleMovement();
 
-    if (!windowDone) {
-      p.noFill(); 
-      p.noStroke();
-      p.rect(windowZone.x, windowZone.y, windowZone.w, windowZone.h);
-    }
-    if (!toyDone) {
-      p.noFill(); 
-      p.noStroke();
-      p.rect(toyZone.x, toyZone.y, toyZone.w, toyZone.h);
-      p.image(toyImg, toyZone.x, toyZone.y, toyZone.w, toyZone.h);
-    }
-    if (windowDone && toyDone) {
-      p.noFill(); 
-      p.noStroke();
-      p.rect(bedZone.x, bedZone.y, bedZone.w, bedZone.h);
-    }
-    
+    if (!toyDone) p.image(toyImg, toyZone.x, toyZone.y, toyZone.w, toyZone.h);
+
     p.image(fionaImg, player.x, player.y, player.w, player.h);
 
-    if (!windowDone && overlaps(player, windowZone)) {
-      scene = 'window_intro';
-      return;
-    }
-    if (!toyDone && overlaps(player, toyZone)) {
-      scene = 'toy_intro';
-      return;
-    }
+    if (!windowDone && overlaps(player, windowZone)) {scene = 'window_intro'; return;}
+    if (!toyDone && overlaps(player, toyZone)) {scene = 'toy_intro'; return;}
 
     if (windowDone && toyDone) {
       if (!bothDoneTextShown) {
@@ -181,7 +157,6 @@ new p5(function(p) {
         scene = 'sleep';
         sleepProgress = 0;
         sleepDone = false;
-        sleepTextVisible = false;
         arrowVisible = false;
         return;
       }
@@ -194,14 +169,11 @@ new p5(function(p) {
   // SCENE: WINDOW INTRO
   function drawWindowIntro() {
     p.image(outsideImg, 0, 0, p.width, p.height);
-
     p.noStroke();
     p.fill(0, 0, 0, 150);
     p.rect(0, 0, p.width, p.height);
 
     p.textAlign(p.CENTER);
-    p.noStroke();
-
     p.textFont('Brush Script MT');
     p.textSize(36);
     p.fill(247, 197, 213);
@@ -214,7 +186,7 @@ new p5(function(p) {
     let lines = [
       "Strangers are lurking outside the window!",
       "Click on Nathan to bark at him — he'll move each time.",
-      `Bark ${nathanNeeded} times before the ${windowTimer} second timer runs out.`
+      `Bark 10 times before the 15 second timer runs out.`
     ];
 
     for (let i = 0; i < lines.length; i++) {
@@ -230,14 +202,11 @@ new p5(function(p) {
   // SCENE: TOY INTRO
   function drawToyIntro() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
-
     p.noStroke();
     p.fill(0, 0, 0, 150);
     p.rect(0, 0, p.width, p.height);
 
     p.textAlign(p.CENTER);
-    p.noStroke();
-
     p.textFont('Brush Script MT');
     p.textSize(36);
     p.fill(247, 197, 213);
@@ -276,7 +245,7 @@ new p5(function(p) {
   function drawWindowGame() {
     p.image(outsideImg, 0, 0, p.width, p.height);
 
-    let elapsed = (p.millis() - windowTimerStart) / 1000;
+    let elapsed   = (p.millis() - windowTimerStart) / 1000;
     let remaining = p.max(0, windowTimer - elapsed);
 
     if (remaining <= 0 && windowResult === '') windowResult = 'fail';
@@ -296,7 +265,7 @@ new p5(function(p) {
   }
 
   function randomizeNathan() {
-    nathan.x = p.random(20, p.width - nathan.w - 20);
+    nathan.x = p.random(20, p.width  - nathan.w - 20);
     nathan.y = p.random(20, p.height - nathan.h - 100);
   }
 
@@ -307,7 +276,7 @@ new p5(function(p) {
     toyCatches = 0;
     toyResult = '';
     toyTimerStart = p.millis();
-    toyMoving.x = p.random(50, p.width - 100);
+    toyMoving.x = p.random(50, p.width  - 100);
     toyMoving.y = p.random(50, p.height - 150);
     textboxVisible = false;
   }
@@ -315,7 +284,7 @@ new p5(function(p) {
   function drawToyGame() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
 
-    let elapsed = (p.millis() - toyTimerStart) / 1000;
+    let elapsed   = (p.millis() - toyTimerStart) / 1000;
     let remaining = p.max(0, toyTimer - elapsed);
 
     if (remaining <= 0 && toyResult === '') toyResult = 'fail';
@@ -323,13 +292,10 @@ new p5(function(p) {
     if (toyResult === '') {
       toyMoving.x += toySpeed.x;
       toyMoving.y += toySpeed.y;
-      if (toyMoving.x < 0 || toyMoving.x > p.width - toyMoving.w) toySpeed.x *= -1;
+      if (toyMoving.x < 0 || toyMoving.x > p.width  - toyMoving.w) toySpeed.x *= -1;
       if (toyMoving.y < 0 || toyMoving.y > p.height - toyMoving.h - 60) toySpeed.y *= -1;
 
-      p.noFill(); p.noStroke();
-      p.rect(toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
       p.image(toyImg, toyMoving.x, toyMoving.y, toyMoving.w, toyMoving.h);
-
       handleMovement();
       p.image(fionaImg, player.x, player.y, player.w, player.h);
 
@@ -337,10 +303,7 @@ new p5(function(p) {
         toyCatches++;
         squeakSound.play();
         if (toyCatches >= toyNeeded) toyResult = 'win';
-        else {
-          toyMoving.x = p.random(50, p.width - 100);
-          toyMoving.y = p.random(50, p.height - 150);
-        }
+        else {toyMoving.x = p.random(50, p.width  - 100); toyMoving.y = p.random(50, p.height - 150);}
       }
     }
 
@@ -369,25 +332,20 @@ new p5(function(p) {
       p.fill(0);
       p.rect(0, 0, p.width, barH);
       p.rect(0, p.height - barH, p.width, barH);
-      if (sleepProgress >= 1) {
-        sleepDone = true;
-        sleepTextVisible = true;
-      }
+      if (sleepProgress >= 1) sleepDone = true;
     } 
     else {
       p.background(0);
-      if (sleepTextVisible) {
-        p.textAlign(p.CENTER);
-        p.noStroke();
-        p.fill(255);
-        p.textSize(16);
-        p.text("Fiona drifts off to sleep...", p.width / 2, p.height / 2 - 30);
-        p.text("But there is a smell in the air she doesn't recognize. An intruder?!", p.width / 2, p.height / 2);
-        if (!arrowVisible) {
-          arrowVisible = true;
-          arrow.x = p.width / 2 - 35;
-          arrow.y = p.height / 2 + 40;
-        }
+      p.textAlign(p.CENTER);
+      p.noStroke();
+      p.fill(255);
+      p.textSize(16);
+      p.text("Fiona drifts off to sleep...", p.width / 2, p.height / 2 - 30);
+      p.text("But there is a smell in the air she doesn't recognize. An intruder?!", p.width / 2, p.height / 2);
+      if (!arrowVisible) {
+        arrowVisible = true;
+        arrow.x = p.width / 2 - 35;
+        arrow.y = p.height / 2 + 40;
       }
     }
 
@@ -408,10 +366,6 @@ new p5(function(p) {
     }
 
     handleMovement();
-
-    p.noFill(); p.noStroke();
-    p.rect(basementDoor.x, basementDoor.y, basementDoor.w, basementDoor.h);
-
     p.image(fionaImg, player.x, player.y, player.w, player.h);
 
     if (!meowPlayed && !textboxVisible && overlaps(player, basementDoor)) {
@@ -454,7 +408,7 @@ new p5(function(p) {
       for (let i = 0; i < photosPerScene; i++) {
         photoSprites.push({
           img: fionaPhotos[p.floor(p.random(fionaPhotos.length))],
-          x: p.random(10, p.width - 90),
+          x: p.random(10, p.width  - 90),
           y: p.random(10, p.height - 190)
         });
       }
@@ -464,22 +418,24 @@ new p5(function(p) {
     p.noTint();
   }
 
-// ------------------------------------------------------------------------------------------------
-// Other Functions
+
+  // ------------------------------------------------------------------------------------------------
+  // Other Functions
+
   function handleMovement() {
     if (p.keyIsDown(65)) player.x -= player.speed;
     if (p.keyIsDown(68)) player.x += player.speed;
     if (p.keyIsDown(87)) player.y -= player.speed;
     if (p.keyIsDown(83)) player.y += player.speed;
 
-    player.x = p.constrain(player.x, 0, p.width - player.w);
+    player.x = p.constrain(player.x, 0, p.width  - player.w);
     player.y = p.constrain(player.y, 0, p.height - player.h);
   }
 
   function overlaps(a, b) {
-    return a.x < b.x + b.w && 
+    return a.x < b.x + b.w &&
            a.x + a.w > b.x &&
-           a.y < b.y + b.h && 
+           a.y < b.y + b.h &&
            a.y + a.h > b.y;
   }
 
@@ -520,9 +476,9 @@ new p5(function(p) {
     windowDone = false;
     toyDone = false;
     meowPlayed = false;
-    basementArrow = false;
     arrowVisible = false;
     textboxVisible = false;
+    textboxIndex = 0;
     sleepProgress = 0;
     sleepDone = false;
     basementIntroShown = false;
@@ -532,7 +488,9 @@ new p5(function(p) {
   }
 
 
+  // ------------------------------------------------------------------------------------------------
   // INPUT
+
   p.mousePressed = function() {
 
     if (scene === 'start') {
@@ -550,18 +508,9 @@ new p5(function(p) {
       return false;
     }
 
-    if (scene === 'end') {
-      resetGame();
-      return false;
-    }
-    if (scene === 'window_intro') {
-      startWindowGame();
-      return false;
-    }
-    if (scene === 'toy_intro') {
-      startToyGame();
-      return false;
-    }
+    if (scene === 'end') {resetGame(); return false;}
+    if (scene === 'window_intro') {startWindowGame(); return false;}
+    if (scene === 'toy_intro') {startToyGame(); return false;}
 
     if (scene === 'window_game' && windowResult === '') {
       if (p.mouseX > nathan.x && p.mouseX < nathan.x + nathan.w &&
@@ -609,7 +558,6 @@ new p5(function(p) {
           p.mouseY > arrow.y && p.mouseY < arrow.y + arrow.h) {
         scene = 'basement';
         meowPlayed = false;
-        basementArrow = false;
         ghostPhotos(true);
         resetPlayer();
       }
