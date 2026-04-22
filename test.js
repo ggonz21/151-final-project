@@ -66,7 +66,7 @@ new p5(function(p) {
   let meowPlayed = false;
   let basementArrow = false;
 
-
+  // ------------------------------------------------------------------------------------------------
   // PRELOAD
   p.preload = function() {
     fionaImg = p.loadImage('media/game/fiona.png');
@@ -87,14 +87,14 @@ new p5(function(p) {
     }
   }
 
-
+  // ------------------------------------------------------------------------------------------------
   // SETUP
   p.setup = function() {
     let cnv = p.createCanvas(document.getElementById('game-canvas').offsetWidth, 500);
     cnv.parent('game-canvas');
   }
 
-
+  // ------------------------------------------------------------------------------------------------
   // MAIN DRAW
   p.draw = function() {
     if (scene === 'start') drawStart();
@@ -135,7 +135,7 @@ new p5(function(p) {
   // SCENE: BEDROOM
   function drawBedroom() {
     p.image(bedroomImg, 0, 0, p.width, p.height);
-    drawGhostPhotos();
+    ghostPhotos(false);
     handleMovement();
 
     if (!windowDone) {
@@ -398,7 +398,7 @@ new p5(function(p) {
   // SCENE: BASEMENT
   function drawBasement() {
     p.image(basementImg, 0, 0, p.width, p.height);
-    drawGhostPhotos();
+    ghostPhotos(false);
 
     if (!basementIntroShown) {
       basementIntroShown = true;
@@ -436,7 +436,7 @@ new p5(function(p) {
     p.noStroke();
 
     p.textFont('Brush Script MT');
-    p.textSize(80);
+    p.textSize(50);
     p.fill(247, 197, 213);
     p.text("Fiona did not know what a Penny was", p.width / 2, p.height / 2 - 20);
 
@@ -448,27 +448,24 @@ new p5(function(p) {
 
 
   // GHOST PHOTOS
-  function spawnGhostPhotos() {
-    photoSprites = [];
-    for (let i = 0; i < photosPerScene; i++) {
-      photoSprites.push({
-        img: fionaPhotos[Math.floor(Math.random() * fionaPhotos.length)],
-        x:   p.random(10, p.width  - 90),
-        y:   p.random(10, p.height - 190)
-      });
+  function ghostPhotos(spawn) {
+    if (spawn) {
+      photoSprites = [];
+      for (let i = 0; i < photosPerScene; i++) {
+        photoSprites.push({
+          img: fionaPhotos[p.floor(p.random(fionaPhotos.length))],
+          x: p.random(10, p.width - 90),
+          y: p.random(10, p.height - 190)
+        });
+      }
     }
-  }
-
-  function drawGhostPhotos() {
-    p.tint(255, 30);
-    for (let s of photoSprites) {
-      p.image(s.img, s.x, s.y, 80, 80);
-    }
+    p.tint(255, 80);
+    for (let s of photoSprites) p.image(s.img, s.x, s.y, 80, 80);
     p.noTint();
   }
 
-
-  // HELPERS
+// ------------------------------------------------------------------------------------------------
+// Other Functions
   function handleMovement() {
     if (p.keyIsDown(65)) player.x -= player.speed;
     if (p.keyIsDown(68)) player.x += player.speed;
@@ -541,7 +538,7 @@ new p5(function(p) {
     if (scene === 'start') {
       scene = 'bedroom';
       resetPlayer();
-      spawnGhostPhotos();
+      ghostPhotos(true);
       textboxVisible = true;
       textboxLines = [
         "Fiona wakes up in the bedroom.",
@@ -613,7 +610,7 @@ new p5(function(p) {
         scene = 'basement';
         meowPlayed = false;
         basementArrow = false;
-        spawnGhostPhotos();
+        ghostPhotos(true);
         resetPlayer();
       }
       return false;
@@ -641,6 +638,8 @@ new p5(function(p) {
     }
   }
 
+  // ------------------------------------------------------------------------------------------------
+  // For HTML
   p.windowResized = function() {
     p.resizeCanvas(document.getElementById('game-canvas').offsetWidth, 500);
   }
