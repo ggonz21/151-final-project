@@ -1,4 +1,4 @@
-/* ===== BASE ===== */
+/* ===== BODY STUFF ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -11,7 +11,7 @@ body {
   line-height: 1.7;
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADERS ===== */
 header {
   text-align: center;
   padding: 2.5rem 0 2rem;
@@ -122,7 +122,7 @@ video {
   font-size: 0.8rem;
 }
 
-/* ===== PASSWORD GATE ===== */
+/* ===== PASSWORD BOX ===== */
 #passwordField {
   display: block;
   margin: 1rem 0 0.5rem;
@@ -165,7 +165,7 @@ video {
   min-height: 1.2rem;
 }
 
-/* ===== 3D SKETCH CANVAS ===== */
+/* ===== 3D SKETCH ===== */
 #sketch3D-canvas {
   display: block;
   width: 100%;
@@ -174,7 +174,7 @@ video {
   background: #2B4A7A;
 }
 
-/* ===== GAME LINK BUTTON ===== */
+/* ===== GAME BUTTON ===== */
 #game-link {
   display: inline-block;
   margin-top: 1rem;
@@ -195,7 +195,7 @@ video {
   color: #2B4A7A;
 }
 
-/* ===== MINIGAME CANVAS ===== */
+/* ===== GAME ===== */
 #game-canvas {
   width: 100%;
   height: 500px;
@@ -208,7 +208,7 @@ video {
   margin-top: 1rem;
 }
 
-/* ===== HEART PHOTO COLLAGE ===== */
+/* ===== HEART PHOTOS ===== */
 #heart-container {
   position: relative;
   width: 100%;
@@ -233,12 +233,3 @@ video {
 #e6 { top: 180px; left: 160px; }
 #e7 { top: 180px; left: 500px; }
 #e8 { top: 280px; left: 330px; }
-
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  color: #5B85B8;
-  font-size: 0.85rem;
-  padding-top: 2rem;
-  border-top: 1px solid #5B85B8;
-}
