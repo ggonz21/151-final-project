@@ -145,9 +145,11 @@ new p5(function(p) {
         bothDoneTextShown = true;
         textboxVisible = true;
         textboxLines = [
-          "Fiona feels as though she has done a wonderful job.",
-          "She is quite tired, after all, she's on call 24/7",
-          "Maybe a nap in her bed would do her good before her next shift"
+          "Fiona feels as though she has done a fantastic job today.",
+          "Well, that is to say that she always does a great job.",
+          "Fiona is feeling tired, her job is not an easy one to do",
+          "After all, she's on call 24/7",
+          "Maybe a nap in her bed would do her good before her next shift."
         ];
         textboxIndex = 0;
       }
@@ -181,7 +183,7 @@ new p5(function(p) {
     p.fill(255);
 
     let lines = [
-      "Strangers are lurking outside the window!",
+      "Nathan is lurking outside the house again!",
       "Click on Nathan to bark at him — he'll move each time.",
       `Bark 10 times before the 15 second timer runs out.`
     ];
@@ -214,7 +216,7 @@ new p5(function(p) {
 
     let lines = [
       "Fiona's toy is bouncing around the room!",
-      "Use W A S D to move Fiona and chase it down.",
+      "Help Fiona chase it down.",
       `Catch it 5 times before the 15 second timer runs out.`
     ];
 
@@ -255,7 +257,7 @@ new p5(function(p) {
     p.text("Barks: " + nathanClicks + " / " + nathanNeeded, 12, 24);
     p.text("Time: " + p.nf(remaining, 1, 1) + "s", 12, 44);
 
-    if (windowResult === 'fail') drawOverlay("Fiona missed them! Try again?", true);
+    if (windowResult === 'fail') drawOverlay("Nathan is breaking into the house! Try again?", true);
     else if (windowResult === 'win') drawOverlay("Fiona did amazing! Click to continue.", false);
   }
 
@@ -491,9 +493,9 @@ new p5(function(p) {
       textboxVisible = true;
       textboxLines = [
         "Fiona wakes up in the bedroom.",
-        "She contemplates on what to do first. Bark at the strangers who are lurking outside, waiting to break into her home",
-        "or play with her toys because she needs to train?",
-        "Use WASD to move."
+        "She contemplates on what to do first.",
+        "Bark at the strangers who are lurking outside, waiting to break into her home",
+        "Or play with her toys because she needs to train?"
       ];
       
       textboxIndex = 0;
@@ -522,7 +524,10 @@ new p5(function(p) {
         scene = 'bedroom';
         resetPlayer();
         textboxVisible = true;
-        textboxLines = ["Fiona barked at every stranger outside! No one is breaking in today, especially not Nathan"];
+        textboxLines = [
+          "Fiona scared away Nathan once again! No one is breaking in today, especially not Nathan", 
+          "What is the next thing Fiona should do?"
+        ];
         textboxIndex = 0;
       }
       return false;
