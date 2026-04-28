@@ -31,6 +31,7 @@ new p5(function(p) {
     bgTextureMain = p.loadImage("media/other/hearts.jpeg");
     nathanTexture = p.loadImage("media/game/nathan.png");
     font = p.loadFont("media/other/PlayfairDisplay-VariableFont_wght.ttf");
+    music = p.loadSound("media/other/Dazzling Ode(2).mp3");
     
     for(let i = 0; i < imagePaths.length; i++){
       textures.push(p.loadImage(imagePaths[i]));
@@ -45,6 +46,7 @@ new p5(function(p) {
   p.setup = function() {
     let cnv = p.createCanvas(document.getElementById('sketch3D-canvas').offsetWidth, 500, p.WEBGL);
     cnv.parent('sketch3D-canvas');
+    music.loop();
   }
   
   p.draw = function() {

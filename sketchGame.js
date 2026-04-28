@@ -78,6 +78,7 @@ new p5(function(p) {
     barkSound = p.loadSound('media/game/bark.mp3');
     meowSound = p.loadSound('media/game/meow.mp3');
     squeakSound = p.loadSound('media/game/squeak.mp3');
+    music = p.loadSound('media/game/Geniusly Hacked Bebop(2).mp3');
 
     for (let i = 0; i < imagePaths.length; i++) {
       fionaPhotos.push(p.loadImage(imagePaths[i]));
@@ -89,6 +90,7 @@ new p5(function(p) {
   p.setup = function() {
     let cnv = p.createCanvas(document.getElementById('game-canvas').offsetWidth, 500);
     cnv.parent('game-canvas');
+    music.loop();
   }
 
   // ------------------------------------------------------------------------------------------------
@@ -115,7 +117,7 @@ new p5(function(p) {
     p.textFont('Brush Script MT');
     p.textSize(54);
     p.fill(247, 197, 213);
-    p.stroke(0);
+    p.stroke(5);
     p.text("A Day in the Life of Fiona", p.width / 2, 170);
 
     p.image(fionaImg, p.width / 2 - 40, 200, 80, 80);
@@ -124,7 +126,8 @@ new p5(function(p) {
     p.textSize(15);
     p.fill(43, 74, 122);
     p.noStroke();
-    p.text("click to start", p.width / 2, 340);
+    p.text("Use W A S D to move", p.width / 2, 340);
+    p.text("Click to start", p.width / 2, 360);
   }
 
   // SCENE: BEDROOM
